@@ -1,0 +1,53 @@
+'pętli' / 'dwóch pętlach' + 'i'
+'zastępcza'
+'zastępczą'
+'autobusowa'
+'trasa linii'
+'ZA METRO'
+'za "metro"'
+
+'Autobusy linii'
+'kursuje autobusowa komunikacja zastępcza'
+'podjazd'
+
+'prosimy o korzystanie'
+'można równierz korzystać z tramwajowej linii'
+'obsługującej pzystanki w zespołach przystankowych'
+
+'na stacji'
+'utrudnienia w dojściu'
+
+'zamknięte dla ruchu'
+'–'
+'↔'
+
+'.' Full stop
+
+'i'
+
+'nie kursują'
+
+'oraz'
+
+<pętlach> <stacja> <joiner> <stacja> [<joiner> <stacja>] [oraz <stacja> <joiner> <stacja> [<joiner> <stacja>]]
+
+'na odcinku' <stacja> <joiner> <stacja>
+
+'autobusy kursują na wydłużonej trasie'
+'zostały skierowane na trasę wydłużoną'
+'wydłużono kursownaie'
+
+wyjątek dla os. Kabaty?
+
+'wyłączone stacje z ruchu (..)'
+
+'trwa uruchamianie'
+'Uruchomiono linię'
+'na trasie'
+
+'zmniejszoną częstotliwością'
+'kursuje na trasie skróconej'
+
+<stacja> '>' <stacja> # kierunek >
+
+'możliwe opóźnienia oraz wydłużone postoje'
