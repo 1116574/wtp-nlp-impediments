@@ -1,4 +1,4 @@
-import html, json
+import html, json, re
 from bs4 import BeautifulSoup
 
 from rich.console import Console
@@ -13,38 +13,21 @@ with open('history.json', 'r', encoding='utf-8') as f:
     history = json.load(f)
 
 # body = html.unescape(history[20]['body'])  # 17  19 wejscie lol
-body = html.unescape(history[3]['body'])
+body = html.unescape(history[0]['body'])
 soup = BeautifulSoup(body, 'html.parser')
 processed_html = [s for s in soup.strings]
 
-completely_processed = []
-for tag in processed_html:
-    completely_processed += tag.split('.')
+text = ' '.join(processed_html)
 
 console = Console()
+console.print(text)
 
-for body in completely_processed:
-    print(body)
+semantic = [None] * len(text)
 
-    for station in M1:
-        if station.turn_around:
-            token = f'[bold blue]{station}[/bold blue]'
-        else:
-            token = f'[bold green]{station}[/bold green]'
+for station in M1:
+    for name in station:
+        index = text.find(name)
+        if index >= 0:
+            semantic[index] = station
 
-        
-        body = body.replace(station.name, token)
-        body = body.replace(station.name.upper(), token)
-        body = body.replace(station.name.lower(), token)
-        for form in station.forms:
-            body = body.replace(form, token)
-            body = body.replace(form.upper(), token)
-            body = body.replace(form.lower(), token)
-
-
-    for token in TOKENS:
-        for word in token.raw:
-            body = body.replace(word, f'[bold purple]{token}[/bold purple]')
-            body = body.replace(word.capitalize(), f'[bold purple]{token}[/bold purple]')
-    console.print('>>>', body, highlight=False)
-
+print(semantic)

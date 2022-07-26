@@ -33,6 +33,9 @@ class Station:
     def __repr__(self):
         return f'< {self.name} >'
 
+    def __iter__(self):
+        return ([self.name] + self.forms).__iter__()
+
 
 M1 = [
     Station('A1', 'Kabaty', [], True),
