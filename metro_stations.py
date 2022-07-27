@@ -30,11 +30,16 @@ class Station:
     forms: list
     turn_around: bool = False
 
+    __match_args__ = ('id', 'name', 'forms', 'turn_around')
+
     def __repr__(self):
         return f'< {self.name} >'
 
     def __iter__(self):
         return ([self.name] + self.forms).__iter__()
+
+    def __hash__(self) -> int:
+        return (self.name + ''.join(self.forms)).__hash__()
 
 
 M1 = [
@@ -52,11 +57,27 @@ M1 = [
     Station('A13', 'Centrum', [], True),
     Station('A14', 'Świętokrzyska', []),
     Station('A15', 'Ratusz Arsenał', ['Ratusz-Arsenał']),
-    Station('A17', 'Dworzec Gdański', ['Dw.Gdański', 'Dw. Gdański'], True),
+    Station('A17', 'Dworzec Gdański', ['Dw.Gdański', 'Dw. Gdański', 'Gdański'], True),
     Station('A18', 'Plac Wilsona', ['Pl.Wilsona', 'Pl. Wilsona', 'pl.Wilsona', 'plac Wilsona'], True),
     Station('A19', 'Marymont', []),
     Station('A20', 'Słodowiec', [], True),
     Station('A21', 'Stare Bielany', []),
     Station('A22', 'Wawrzyszew', []),
     Station('A23', 'Młociny', [], True),
+]
+
+M2 = [
+    Station('C6', 'Księcia Janusza', [], True),
+    Station('C7', 'Młynów', []),
+    Station('C8', 'Płocka', []),
+    Station('C9', 'Rondo Daszyńskiego', [], True),
+    Station('C10', 'Rondo ONZ', [], True),
+    Station('C11', 'Świętokrzyska', []),
+    Station('C12', 'Nowy Świat-Uniwersytet', []),
+    Station('C13', 'Centrum Nauki Kopernik', []),
+    Station('C14', 'Stadion Narodowy', ['Narodowy', 'Stadion']),
+    Station('C15', 'Dworzec Wileński', ['Dw. Wileński', 'Wileński', 'Dw.Wileński'], True),
+    Station('C16', 'Szwedzka', []),
+    Station('C17', 'Targówek Mieszkaniowy', ['Targówek'], True),
+    Station('C18', 'Trocka', [], True),
 ]
