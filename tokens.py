@@ -40,7 +40,12 @@ class Not_Functioning_Station(Token):
 
 @dataclass
 class Reduced_Service(Token):
-    raw = ['zmniejszoną częstotliwością', 'kursuje na trasie skróconej', 'kursują na trasie skróconej', 'na trasie skróconej']
+    raw = ['zmniejszoną częstotliwością']
+    name = 'reduced'
+
+@dataclass
+class Shortened_Service(Token):
+    raw = ['kursuje na trasie skróconej', 'kursują na trasie skróconej', 'na trasie skróconej']
     name = 'reduced'
 
 @dataclass
@@ -58,7 +63,7 @@ class Loop(Token):
 
 @dataclass
 class Loop_Double(Token):
-    raw = ['dwóch pętlach']
+    raw = ['dwóch pętlach', 'pętlach']
 
 @dataclass
 class Metro_Replacement_Names(Token):
@@ -78,7 +83,7 @@ class On_Station(Token):
 
 @dataclass
 class Recommended_Detour(Token):
-    raw = ['prosimy o korzystanie', 'można również korzystać z tramwajowej linii', 'można również korzystać z']
+    raw = ['prosimy o korzystanie', 'prosimy również o korzystanie', 'można również korzystać z tramwajowej linii', 'można również korzystać z']
 
 @dataclass
 class Detour_By_Extension(Token):
@@ -118,6 +123,7 @@ TOKENS = [
     Not_Functioning_Facility,
     Not_Functioning_Station,
     Reduced_Service,
+    Shortened_Service,
     Detour_By_Extension,
     Bus_service,
     Tram_service,
