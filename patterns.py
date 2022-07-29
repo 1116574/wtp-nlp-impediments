@@ -1,7 +1,6 @@
 from metro_stations import Station
 from tokens import *
 
-
 # format: classes are tokens and stations objects,
 #  between which are numbers representing maxiumm distance.
 # pattern = [Station, 6, Between, 6, Station]
@@ -23,6 +22,7 @@ def get_patterns():
         'loop_ext': [Loop, 4, 'relation_ext'],
         'loop_double': [Loop_Double, 4, 'relation', 6, And, 6, 'relation'],
         'reduced_service': [Metro_Line, 10, Reduced_Service, 10, On, 10, 'relation'],
+        'shortened_service': [Shortened_Service, 6, On, 6, 'relation']
     }
 
     new_patterns = patterns
@@ -36,8 +36,10 @@ def get_patterns():
 
     return new_patterns
 
-from rich import print
-print(get_patterns())
+
+if __name__ == '__main__':
+    from rich import print
+    print(get_patterns())
 
 # class Relation:
 #     def __init__(self):

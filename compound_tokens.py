@@ -1,26 +1,6 @@
-'''[
-    15,
-    < M2 >, 
-    1, 
-    <class 'tokens.Reduced_Service'>, 
-    0, 
-    <class 'tokens.On'>, 
-    8, 
-    < Księcia Janusza >, 
-    1, 
-    <class 'tokens.Between'>, 
-    1, 
-    < Targówek Mieszkaniowy >, 
-    1
-]'''
-
 from metro_stations import Station 
 import tokens
 from patterns import get_patterns
-
-
-# from external tokenizer
-text = [15, tokens.Metro_Line('M2'), 1, tokens.Reduced_Service, 0, tokens.On, 8, Station('C6', 'Księcia Janusza', [], True), 1, tokens.Between, 0, Station('C17', 'Targówek Mieszkaniowy', ['Targówek'], True)]
 
 
 def matches(text, pattern):
@@ -74,8 +54,24 @@ def find_pattern(text, pattern):
             return out
 
 
-patterns = get_patterns()
-for pattern in patterns:
-    print(pattern)
-    print(find_pattern(text, patterns[pattern]))
+if __name__ == '__main__':
+    # from external tokenizer
+    text = [15, tokens.Metro_Line('M2'), 1, tokens.Reduced_Service, 0, tokens.On, 8, Station('C6', 'Księcia Janusza', [], True), 1, tokens.Between, 0, Station('C17', 'Targówek Mieszkaniowy', ['Targówek'], True)]
+
+    patterns = get_patterns()
+    for pattern in patterns:
+        result = find_pattern(text, patterns[pattern])
+        if result:
+            print(pattern, result)
+
+            import status
+            if hasattr(status, pattern):
+                print('calling status')
+                exec_func = getattr(status, pattern)
+                final = exec_func(result)
+                print(final)
+            else:
+                print('Not implemented yet.')
+
+        print('=====')
 
