@@ -1,6 +1,15 @@
 from ctypes import Union
 from dataclasses import dataclass
 
+class Dummy:
+    pass
+
+class Full_Stop:
+    pass
+
+class And:
+    pass
+
 @dataclass
 class Token:
     """ Generic word token """
@@ -69,9 +78,10 @@ class Loop_Double(Token):
 class Metro_Replacement_Names(Token):
     raw = ['"ZA METRO"', 'ZA METRO', 'za "metro"']
 
-@dataclass
-class Full_Stop(Token):
-    raw = ['.']
+# TODO: This requires more logic to recognize abbriviaitons
+# @dataclass
+# class Full_Stop(Token):
+#     raw = ['.']
 
 @dataclass
 class On(Token):

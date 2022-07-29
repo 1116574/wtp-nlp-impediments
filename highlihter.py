@@ -5,19 +5,11 @@ from bs4 import BeautifulSoup
 from rich.console import Console
 
 from metro_stations import M1, M2
-from tokens import TOKENS, Full_Stop
+from tokens import TOKENS, Full_Stop, And, Dummy
 
 # body = "<p><strong>Z przyczyn technicznych wyst&#x119;puj&#x105; utrudnienia w kursowaniu metra linii M1. Metro kursuje w p&#x119;tli Metro Kabaty &#x2013; Metro S&#x142;odowiec &#x2013; Metro Kabaty.</strong></p><p><strong>Trwa uruchamianie komunikacji zast&#x119;pczej za metro.</strong></p><p><strong>Za utrudnienia przepraszamy.</strong></p>"
 # body = html.unescape(body)
 
-class Dummy:
-    pass
-
-class FullStop:
-    pass
-
-class And:
-    pass
 
 # https://stackoverflow.com/a/4665027/9366540
 def find_all(a_str, sub):
@@ -52,11 +44,14 @@ with open('history.json', 'r', encoding='utf-8') as f:
 
 # body = html.unescape(history[20]['body'])  # 17  19 wejscie lol
 body = html.unescape(history[17]['body'])
+body = '<p><strong><u>Trwa przywracanie podstawowej organizacji ruchu.</u></strong></p><p> Z powodu zdarzenia na stacji metra<strong> Centrum</strong> wyst&#x119;puj&#x105; utrudnienia w kursowaniu linii metra <strong>M1</strong>. Ruch odbywa si&#x119; w p&#x119;tlach: <strong>Kabaty &#x2013; Politechnika</strong> oraz <strong>Dw.Gda&#x144;ski &#x2013; M&#x142;ociny</strong>. </p><p> Na odcinku <strong>Metro Politechnika</strong> <strong>&#x2013; Dw. Gda&#x144;ski</strong> prosimy r&#xF3;wnie&#x17C; o korzystanie z tramwajowej linii <strong>4,15,18,35. </strong></p><p>Autobusy linii <strong>520</strong> kursuj&#x105; na wyd&#x142;u&#x17C;onej trasie <strong>Marysin&#x2026;..pl. Bankowy, Andersa &#x2013; pl. Wilsona.</strong></p><p> <strong>Przepraszamy za utrudnienia.</strong> </p>'
 # 35 doesnt even have loop skull emoji
 soup = BeautifulSoup(body, 'html.parser')
 processed_html = [s for s in soup.strings]
 
 text = ' '.join(processed_html)
+
+# text = 'Linia metra MA12 kursuje w pętli Młocin-Centrum, wyłączone stacje: STP KABATY, Młociny, Plac Wilsona, Politechnika'
 
 console = Console()
 console.print(text)
@@ -69,7 +64,7 @@ text = " ".join(text.split())
 # Detect sentences
 results = find_all(text, '.')  # TODO : recognize abbriviations, pl. -> plac; al. -> aleja; os. -> osiedle etc.
 for index in results:
-    semantic[index] = FullStop
+    semantic[index] = Full_Stop
 
 # Detect 'and' ('i')
 results = find_all(text, ' i ')
@@ -111,7 +106,7 @@ reduced = distance_reduce(semantic)
 print('======')
 items = []
 for obj in reduced:
-    if obj is FullStop:
+    if obj is Full_Stop:
         print(items)
         items = []
     else:

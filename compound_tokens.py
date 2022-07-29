@@ -16,6 +16,11 @@
 
 from metro_stations import Station 
 import tokens
+from patterns import get_patterns
+
+
+# from external tokenizer
+text = [15, tokens.Metro_Line('M2'), 1, tokens.Reduced_Service, 0, tokens.On, 8, Station('C6', 'Księcia Janusza', [], True), 1, tokens.Between, 0, Station('C17', 'Targówek Mieszkaniowy', ['Targówek'], True)]
 
 
 def matches(text, pattern):
@@ -50,34 +55,27 @@ def matches(text, pattern):
     if text is pattern:
         return True
 
-# from external tokenizer
-text = [15, tokens.Metro_Line('M2'), 1, tokens.Reduced_Service, 0, tokens.On, 8, Station('C6', 'Księcia Janusza', [], True), 1, tokens.Between, 0, Station('C17', 'Targówek Mieszkaniowy', ['Targówek'], True)]
 
-# format: classes are tokens and stations objects,
-#  between which are numbers representing maxiumm distance.
-pattern = [Station, 6, tokens.Between, 6, Station]
-# to this pattern, a [Station, 1, tokens.Between, 5, Station], would match.
-# a [Station, 9 ..] wouldn't match.
+def find_pattern(text, pattern):
+    i = 0
+    out = []
+    for node in text:
+        if matches(node, pattern[i]):
+            # print('ye', i, node, pattern[i])
+            out.append(node)
+            i += 1
+        else: 
+            i = 0
+            out = []
 
-i = 0
-for node in text:
-    if i >= len(pattern):
-        i = 0
-        print('patter done', node)
-
-    # print(type(node), '|', type(pattern[i]))
-    if matches(node, pattern[i]):
-        print('ye', i, node, pattern[i])
-        i += 1
-    else: 
-        i = 0
+        if i >= len(pattern):
+            i = 0
+            # print('patter done', node)
+            return out
 
 
-    # for p_node in pattern:
-    #     if type(p_node) == type(node):
-    #         # a match!
+patterns = get_patterns()
+for pattern in patterns:
+    print(pattern)
+    print(find_pattern(text, patterns[pattern]))
 
-    #         # Check if its a distance value
-    #         if type(p_node) == int and node > p_node:
-    #             # distance too great
-    #             continue
