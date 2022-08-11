@@ -20,7 +20,6 @@
 """
 
 from dataclasses import dataclass
-from turtle import st
 
 @dataclass
 class Station:

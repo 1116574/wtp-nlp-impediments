@@ -1,5 +1,5 @@
-from metro_stations import Station
-from tokens import *
+from data.metro_stations import Station
+from data.tokens import *
 
 # format: classes are tokens and stations objects,
 #  between which are numbers representing maxiumm distance.

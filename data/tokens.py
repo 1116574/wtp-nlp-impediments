@@ -1,4 +1,3 @@
-from ctypes import Union
 from dataclasses import dataclass
 
 class Dummy:
@@ -49,7 +48,7 @@ class Not_Functioning_Station(Token):
 
 @dataclass
 class Reduced_Service(Token):
-    raw = ['zmniejszoną częstotliwością']
+    raw = ['zmniejszoną częstotliwością', 'utudnienia w kursowaniu', 'utrudni']
     name = 'reduced'
 
 @dataclass
@@ -76,7 +75,7 @@ class Loop_Double(Token):
 
 @dataclass
 class Metro_Replacement_Names(Token):
-    raw = ['"ZA METRO"', 'ZA METRO', 'za "metro"']
+    raw = ['"ZA METRO"', 'ZA METRO', 'za "metro"', 'ZM1', 'ZM2', 'Z-1', 'Z-2']
 
 # TODO: This requires more logic to recognize abbriviaitons
 # @dataclass
@@ -98,6 +97,11 @@ class Recommended_Detour(Token):
 @dataclass
 class Detour_By_Extension(Token):
     raw = ['podjazd', 'na trasę wydłużoną', 'trasie wydłużonej', 'wydłużone',]
+
+@dataclass
+class Delays(Token):
+    raw = ['możliwe opóźnienia', 'opóźnie']
+
 
 class Metro_Line:
     __match_args__ = ('line',)
@@ -149,5 +153,6 @@ TOKENS = [
     Reason('zdarzenia'),
     Reason('pozostawionego bagażu'),
     Reason('technicznych'),
-    On_Station
+    On_Station,
+    Delays
 ]

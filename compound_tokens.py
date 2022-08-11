@@ -1,6 +1,6 @@
-from metro_stations import Station 
-import tokens
-from patterns import get_patterns
+from data.metro_stations import Station 
+import data.tokens as tokens
+from data.patterns import get_patterns
 
 
 def matches(text, pattern):
