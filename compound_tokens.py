@@ -58,24 +58,29 @@ def execute(text, patterns):
     for pattern in patterns:
         result = find_pattern(text, patterns[pattern])
         if result:
-            print(pattern, result)
+            # print(pattern, result)
 
             import status
             if hasattr(status, pattern):
-                print('calling status')
+                # print('calling status')
                 exec_func = getattr(status, pattern)
                 final = exec_func(result)
-                print(final)
+                # print(final)
+                yield pattern, result, final
             else:
-                print('Not implemented yet.')
+                # print('Not implemented yet.')
+                # yield NotImplemented
+                pass
 
-        print('=====')
+        # print('=====')
 
 if __name__ == '__main__':
     # from external tokenizer
     # text = [15, tokens.Metro_Line('M2'), 1, tokens.Reduced_Service, 0, tokens.On, 8, Station('C6', 'Księcia Janusza', [], True), 1, tokens.Between, 0, Station('C17', 'Targówek Mieszkaniowy', ['Targówek'], True)]
     text = [13, tokens.Metro_Line('M1'), 11, tokens.Loop, 1, Station('A1', 'Kabaty', [], True), 1, tokens.Between, 1, Station('A20', 'Słodowiec', [], True), 1, tokens.Between, 1, Station('A1', 'Kabaty', [], True), 0]
     patterns = get_patterns()
-    execute(text, patterns)
+    for pattern_name, matching_text, final in execute(text, patterns):
+        print(pattern_name, ':', matching_text, '->', final)
+        print('====')
     pass
 
