@@ -1,11 +1,9 @@
 import html, json, re
-from queue import Full
-from bs4 import BeautifulSoup
 
 from rich.console import Console
 
-from data.metro_stations import M1, M2
-from data.tokens import TOKENS, Full_Stop, And, Dummy, New_Line
+from wtp_nlp.data.metro_stations import M1, M2
+from wtp_nlp.data.tokens import TOKENS, Full_Stop, And, Dummy, New_Line
 
 
 # https://stackoverflow.com/a/4665027/9366540

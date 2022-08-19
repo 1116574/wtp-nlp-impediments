@@ -1,10 +1,10 @@
 import json, html
 
-from highlihter import tokenizer
-from compound_tokens import execute
+from .nlp.highlihter import tokenizer
+from .nlp.compound_tokens import execute
 
-from data.patterns import get_patterns
-from data.tokens import Dummy
+from .data.patterns import get_patterns
+from .data.tokens import Dummy
 
 import requests
 from rss_parser import Parser

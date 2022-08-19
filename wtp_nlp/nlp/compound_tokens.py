@@ -1,7 +1,7 @@
-from data.metro_stations import Station 
-import data.tokens as tokens
-from data.patterns import get_patterns
-
+from wtp_nlp.data.metro_stations import Station 
+import wtp_nlp.data.tokens as tokens
+from wtp_nlp.data.patterns import get_patterns
+import wtp_nlp.data.status as status
 
 def matches(text: any, pattern: any) -> bool:
     """
@@ -84,7 +84,6 @@ def execute(text, patterns):
         results = find_all_patterns(text, patterns[pattern])
         if results:
             for result in results:
-                import status
                 if hasattr(status, pattern):
                     # print('calling status')
                     exec_func = getattr(status, pattern)

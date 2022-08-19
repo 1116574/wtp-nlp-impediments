@@ -1,5 +1,5 @@
-from data.metro_stations import Station
-from data.tokens import *
+from wtp_nlp.data.metro_stations import Station
+from wtp_nlp.data.tokens import *
 
 # format: classes are tokens and stations objects,
 #  between which are numbers representing maxiumm distance.
