@@ -66,7 +66,7 @@ M1 = [
 ]
 
 M2 = [
-    Station('C6', 'Księcia Janusza', [], True),
+    Station('C6', 'Księcia Janusza', ['Ks. Janusza'], True),
     Station('C7', 'Młynów', []),
     Station('C8', 'Płocka', []),
     Station('C9', 'Rondo Daszyńskiego', [], True),

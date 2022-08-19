@@ -9,6 +9,9 @@ class Full_Stop:
 class And:
     pass
 
+class New_Line:
+    pass
+
 @dataclass
 class Token:
     """ Generic word token """
@@ -18,6 +21,7 @@ class Token:
 
     # def __repr__(self):
     #     return f'< {self.name} >'
+
 
 @dataclass
 class Between(Token):
@@ -32,8 +36,8 @@ class Replacement_Service(Token):
 
 
 @dataclass
-class Not_Functioning(Token):
-    raw = ['nie funkcjonują', 'nie kursują', 'wstrzymany', 'wstrzymane']
+class Not_Functioning_Service(Token):
+    raw = ['nie funkcjonują', 'nie kursują', 'wstrzymany', 'wstrzymane', 'wyłączenie']
     name = 'not_functioning'
 
 @dataclass
@@ -43,7 +47,7 @@ class Not_Functioning_Facility(Token):
 
 @dataclass
 class Not_Functioning_Station(Token):
-    raw = ['Wyłączone stacje z ruchu', 'wyłączone', 'Zamknięte zostały stacje metra', 'zamknięt']
+    raw = ['Wyłączone stacje z ruchu', 'wyłączone', 'Zamknięte zostały stacje metra', 'zamknięcie stacji', 'zamknię']
     name = 'not_functioning'
 
 @dataclass
@@ -133,9 +137,9 @@ class Reason:
 TOKENS = [
     Between,
     Replacement_Service,
-    Not_Functioning,
-    Not_Functioning_Facility,
-    Not_Functioning_Station,
+    Not_Functioning_Service,  # as in, trains dont run
+    Not_Functioning_Facility,  # elevators, exits...
+    Not_Functioning_Station,  # whole station closed, but no mention if trains pass throu (tho usually they dont) or if the service is split
     Reduced_Service,
     Shortened_Service,
     Detour_By_Extension,
@@ -154,5 +158,6 @@ TOKENS = [
     Reason('pozostawionego bagażu'),
     Reason('technicznych'),
     On_Station,
-    Delays
+    Delays,
+
 ]

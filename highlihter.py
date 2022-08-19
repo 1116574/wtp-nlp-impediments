@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from rich.console import Console
 
 from data.metro_stations import M1, M2
-from data.tokens import TOKENS, Full_Stop, And, Dummy
+from data.tokens import TOKENS, Full_Stop, And, Dummy, New_Line
 
 
 # https://stackoverflow.com/a/4665027/9366540
@@ -35,13 +35,19 @@ def _distance_reduce(array: list):
     return out
 
 
-def _abbrv(text: str):
+def _abbrv(text: str) -> str:
     """ Replaces shorthands and periods with full word without periods """
-    return text.replace(' pl. ', ' plac ').replace(' al. ', ' aleja ').replace(' os. ', ' osiedle ')
+    return text.replace(' pl. ', ' plac ').replace(' al. ', ' aleja ').replace(' os. ', ' osiedle ').replace('godz.', 'godziny')
 
 
-def tokenizer(text):
+def tokenizer(text: list) -> list:
     semantic = [None] * len(text)
+
+    # New line characters, important - run before .split()
+    # TODO: doesnt seem to work?
+    results = _find_all(text, '\n')
+    for index in results:
+        semantic[index] = New_Line
 
     # Normalize whitespace (double spaces -> single spaces)
     text = " ".join(text.split())
@@ -60,6 +66,7 @@ def tokenizer(text):
     results = _find_all(text, ' oraz ')
     for index in results:
         semantic[index] = And
+
 
     # Metro stations
     for line in [M1, M2]:

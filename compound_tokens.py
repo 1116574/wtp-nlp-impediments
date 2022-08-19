@@ -69,8 +69,8 @@ def execute(text, patterns):
                 yield pattern, result, final
             else:
                 # print('Not implemented yet.')
-                # yield NotImplemented
-                pass
+                yield pattern, result, NotImplemented
+                # pass
 
         # print('=====')
 

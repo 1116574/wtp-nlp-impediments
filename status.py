@@ -31,3 +31,14 @@ def reduced_service(pattern):
 
 def shortened_service(pattern):
     pass
+
+def loop_double(pattern):
+    # [Loop_Double, 4, 'relation', 6, And, 6, 'relation']
+    print(pattern)
+    return [*_service_between(pattern[2], pattern[6]), *_service_between(pattern[8], pattern[12])]
+
+def partly_down(pattern):
+    # [Not_Functioning_Service, 12, 'relation']
+    excluded = _service_between(pattern[2], pattern[6])
+    service = [station for station in M1 if station not in excluded]
+    return service
