@@ -36,6 +36,7 @@ def _distance_reduce(array: list):
 
 
 def _abbrv(text: str):
+    """ Replaces shorthands and periods with full word without periods """
     return text.replace(' pl. ', ' plac ').replace(' al. ', ' aleja ').replace(' os. ', ' osiedle ')
 
 
@@ -46,7 +47,7 @@ def tokenizer(text):
     text = " ".join(text.split())
 
     # Detect sentences
-    text = _abbrv(text)
+    text = _abbrv(text)  # convert shorthands into full words, so `.` doesnt get mixed up
     results = _find_all(text, '.')
     for index in results:
         semantic[index] = Full_Stop
@@ -86,11 +87,11 @@ def tokenizer(text):
     return _distance_reduce(semantic)
 
 if __name__ == '__main__':
-    semantic = tokenizer('Z przyczyn technicznych w rejonie stacji Dworzec Gdański > Kabaty występują utrudnienia w kursowaniu linii M1. Możliwe opóźnienia na linii ok 10-12 min.')
+    reduced = tokenizer('Z przyczyn technicznych w rejonie stacji Dworzec Gdański > Kabaty występują utrudnienia w kursowaniu linii M1. Możliwe opóźnienia na linii ok 10-12 min.')
     # print(semantic)
     print('======')
     # print([x for x in semantic if x is not None])
-    reduced = _distance_reduce(semantic)
+    # reduced = _distance_reduce(semantic)
     # print(reduced)
     print('======')
     items = []

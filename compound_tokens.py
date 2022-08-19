@@ -3,7 +3,7 @@ import data.tokens as tokens
 from data.patterns import get_patterns
 
 
-def matches(text, pattern):
+def matches(text: any, pattern: any) -> bool:
     """
     Checks if given text fits the pattern.
     An instance of metro_station will match Statin, and a class
@@ -36,11 +36,11 @@ def matches(text, pattern):
         return True
 
 
-def find_pattern(text, pattern):
+def find_pattern(full_text: list, full_pattern: list) -> list:
     i = 0
     out = []
-    for node in text:
-        if matches(node, pattern[i]):
+    for node in full_text:
+        if matches(node, full_pattern[i]):
             # print('ye', i, node, pattern[i])
             out.append(node)
             i += 1
@@ -48,7 +48,7 @@ def find_pattern(text, pattern):
             i = 0
             out = []
 
-        if i >= len(pattern):
+        if i >= len(full_pattern):
             i = 0
             # print('patter done', node)
             return out
