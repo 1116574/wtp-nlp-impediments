@@ -38,13 +38,13 @@ def language_processor(text):
 
 
 # print(language_processor('Z przyczyn technicznych w rejonie stacji Dworzec Gdański > Kabaty występują utrudnienia w kursowaniu linii M1. Możliwe opóźnienia na linii ok 10-12 min.'))
-print(language_processor('''Z przyczyn technicznych od godz. 15:35 – wyłączenie ruchu pociągów i zamknięcie stacji.
+language_processor('''Z przyczyn technicznych od godz. 15:35 – wyłączenie ruchu pociągów i zamknięcie stacji.
 
 Linia M1 – wyłączenie: Odcinek Metro Wilanowska – pl. Wilsona
 Linia M2 – wyłączenie: Odcinek Ks. Janusza – Dw. Wileński
 
 Prosimy o korzystanie z komunikacji naziemnej. 15:40 Uruchomiono autobusową komunikację zastępczą za metro (linia M1) kursującą na odcinku: Pl. Wilsona 07 – Mickiewicza – Andersa – Marszałkowska – Waryńskiego – Batorego – Al. Niepodległości – Metro Wilanowska 04.Uruchomiono autobusową komunikację zastępczą za metro (linia M2) kursującą na odcinku: Wileński 01 – Targowa – Sokola – Zamoście – most Świętokrzyski – Tamka – Świętokrzyska – Prosta – Kasprzaka – Płocka – Górczewska – Olbrachta / Redutowa – Olbrachta – Metro Księcia Janusza 01.Przepraszamy za powstałe utrudnienia.
-'''))
+''')
 
 
 if __name__ == '__main__1':

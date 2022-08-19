@@ -35,12 +35,15 @@ def matches(text: any, pattern: any) -> bool:
     if text is pattern:
         return True
 
-
-def find_pattern(full_text: list, full_pattern: list) -> list:
+#                                                       end_index, matched_pattern
+def find_pattern(full_text: list, pattern: list) -> list[int, list]:
+    '''
+    Finds first `pattern` in `full_text`, returns the matching text and its index at which it was found in.
+    '''
     i = 0
     out = []
-    for node in full_text:
-        if matches(node, full_pattern[i]):
+    for n_indx, node in enumerate(full_text):
+        if matches(node, pattern[i]):
             # print('ye', i, node, pattern[i])
             out.append(node)
             i += 1
@@ -48,31 +51,48 @@ def find_pattern(full_text: list, full_pattern: list) -> list:
             i = 0
             out = []
 
-        if i >= len(full_pattern):
+        if i >= len(pattern):
+            # print('sdsadgdfg', n_indx, full_text)
             i = 0
             # print('patter done', node)
-            return out
+            return n_indx, out
+
+    return False, False
+
+
+def find_all_patterns(full_text, pattern):
+    '''
+    Finds all occurences of a `pattern`
+    '''
+    index = 0
+    out = []
+    while True:
+        index, occurence = find_pattern(full_text, pattern)
+        if occurence:
+            out.append(occurence)
+            full_text = full_text[index:]
+            # repeat
+        else:
+            # full_text exhausted, stop
+            break
+
+    return out
 
 
 def execute(text, patterns):
     for pattern in patterns:
-        result = find_pattern(text, patterns[pattern])
-        if result:
-            # print(pattern, result)
+        results = find_all_patterns(text, patterns[pattern])
+        if results:
+            for result in results:
+                import status
+                if hasattr(status, pattern):
+                    # print('calling status')
+                    exec_func = getattr(status, pattern)
+                    final = exec_func(result)
+                    yield pattern, result, final
+                else:
+                    yield pattern, result, NotImplemented
 
-            import status
-            if hasattr(status, pattern):
-                # print('calling status')
-                exec_func = getattr(status, pattern)
-                final = exec_func(result)
-                # print(final)
-                yield pattern, result, final
-            else:
-                # print('Not implemented yet.')
-                yield pattern, result, NotImplemented
-                # pass
-
-        # print('=====')
 
 if __name__ == '__main__':
     # from external tokenizer

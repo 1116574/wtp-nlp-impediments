@@ -24,7 +24,8 @@ def get_patterns():
         'loop_ext': [Loop, 4, 'relation_ext'],
         'loop_double': [Loop_Double, 4, 'relation', 6, And, 6, 'relation'],
         'reduced_service': [Metro_Line, 10, Reduced_Service, 10, On, 10, 'relation'],
-        'reduced_service_ext': [Reduced_Service, 32, Metro_Line],
+        'reduced_service_1': [Metro_Line, 10, On, 10, 'relation', Reduced_Service],
+        'reduced_service_2': [Reduced_Service, 32, Metro_Line],
         'shortened_service': [Shortened_Service, 6, On, 6, 'relation'],
         'partly_down': [Not_Functioning_Service, 12, 'relation']
     }
