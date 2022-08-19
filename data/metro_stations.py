@@ -35,7 +35,7 @@ class Station:
         return f'< {self.name} >'
 
     def __iter__(self):
-        return ([self.name] + self.forms).__iter__()
+        return (['Metro ' + self.name, self.name] + self.forms).__iter__()
 
     def __hash__(self) -> int:
         return (self.name + ''.join(self.forms)).__hash__()
@@ -66,6 +66,8 @@ M1 = [
 ]
 
 M2 = [
+    Station('C4', 'Bemowo', [], True),
+    Station('C5', 'Ulrychów', [], False),
     Station('C6', 'Księcia Janusza', ['Ks. Janusza'], True),
     Station('C7', 'Młynów', []),
     Station('C8', 'Płocka', []),
