@@ -22,7 +22,7 @@ def language_processor(text):
     while Dummy in token_collection:
         token_collection.remove(Dummy)
 
-    print(token_collection)
+    # print(token_collection)
 
     # Find patterns & get their results
     patterns = get_patterns()
