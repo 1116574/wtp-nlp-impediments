@@ -15,6 +15,29 @@ Linia M2 – wyłączenie: Odcinek Ks. Janusza – Dw. Wileński
 
 Prosimy o korzystanie z komunikacji naziemnej. 15:40 Uruchomiono autobusową komunikację zastępczą za metro (linia M1) kursującą na odcinku: Pl. Wilsona 07 – Mickiewicza – Andersa – Marszałkowska – Waryńskiego – Batorego – Al. Niepodległości – Metro Wilanowska 04.Uruchomiono autobusową komunikację zastępczą za metro (linia M2) kursującą na odcinku: Wileński 01 – Targowa – Sokola – Zamoście – most Świętokrzyski – Tamka – Świętokrzyska – Prosta – Kasprzaka – Płocka – Górczewska – Olbrachta / Redutowa – Olbrachta – Metro Księcia Janusza 01.Przepraszamy za powstałe utrudnienia.
 ```
+this program parses it into:
+```
+<class 'wtp_nlp.data.status.Double_Loop'>,
+            [
+                < Kabaty >,
+                < Natolin >,
+                < Imielin >,
+                < Stokłosy >,
+                < Ursynów >,
+                < Służew >,
+                # (NOTE: this should be split)
+                < Marymont >,
+                < Słodowiec >,
+                < Stare Bielany >,
+                < Wawrzyszew >,
+                < Młociny >
+            ]
+```
+for M1 and 
+```
+<class 'wtp_nlp.data.status.Double_Loop'>, [< Bemowo >, < Ulrychów >, (again, split here), < Szwedzka >, < Targówek Mieszkaniowy >, < Trocka >]
+```
+for M2
 
 
 # Permitted output
