@@ -21,7 +21,9 @@ def get_patterns():
         'relation_ext': [Station, 6, Between, 6, Station, 6, Between, 6, Station], # '_same-0' # there is currently no way to specify 'same as first index'
         'reason': [Reason, 10, On_Station, 10, Station],
         'loop': [Loop, 4, 'relation'],
+        'loop_1': [Loop, 4, On, 4, 'relation'],
         'loop_ext': [Loop, 4, 'relation_ext'],
+        'loop_ext_1': [Loop, 4, On, 4, 'relation_ext'],
         'loop_double': [Loop_Double, 4, 'relation', 6, And, 6, 'relation'],
         'reduced_service': [Metro_Line, 10, Reduced_Service, 10, On, 10, 'relation'],
         'reduced_service_1': [Metro_Line, 10, On, 10, 'relation', Reduced_Service],
@@ -31,6 +33,7 @@ def get_patterns():
         'facility_offline': [Not_Functioning_Facility, 24, Metro_Line, 8, Station],
         'facility_offline_1': [Not_Functioning_Facility, 24, Station],
         'facility_offline_2': [Station, 24, Not_Functioning_Facility],
+        'facility_offline_3': [Not_Functioning_Facility, 8, On_Station, 8, Station],
         'service_on': [Metro_Line, 12, On, 6, 'relation'],
         'station_closed': [Not_Functioning_Station, 16, Station]
     }

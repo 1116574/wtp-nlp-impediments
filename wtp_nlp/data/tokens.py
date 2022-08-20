@@ -26,7 +26,7 @@ class Token:
 @dataclass
 class Between(Token):
     """ Joins 2 or more stations """
-    raw = ['↔', '–', '<>', '<->']
+    raw = ['↔', '–', '<–>', '<>', '-', '<->']
     name = '+'
 
 @dataclass
@@ -42,7 +42,7 @@ class Not_Functioning_Service(Token):
 
 @dataclass
 class Not_Functioning_Facility(Token):
-    raw = ['zamknięte wejście', 'zamknięte wyjście', 'awaria wind']
+    raw = ['zamknięte wejście', 'zamknięte wyjście', 'zamknięto wejście', 'zamknięto wyjście', 'awaria wind']
     name = 'not_functioning'
 
 @dataclass

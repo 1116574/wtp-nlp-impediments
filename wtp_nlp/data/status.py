@@ -43,8 +43,20 @@ def loop(pattern):
     end = pattern[6]
     return Loop, _service_between(start, end)
 
+
+def loop_1(pattern):
+    start = pattern[4]
+    end = pattern[8]
+    return Loop, _service_between(start, end)
+
+
 def loop_ext(pattern):
     return Loop, loop(pattern)
+
+
+def loop_ext_1(pattern):
+    return Loop, loop_1(pattern)
+
 
 def reduced_service(pattern):
     start = pattern[6]
@@ -93,6 +105,10 @@ def facility_offline_1(pattern):
 
 def facility_offline_2(pattern):
     return Facilities, pattern[0]
+
+
+def facility_offline_3(pattern):
+    return Facilities, pattern[4]
 
 
 def service_on(pattern):
