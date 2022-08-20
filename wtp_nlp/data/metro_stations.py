@@ -41,44 +41,82 @@ class Station:
         return (self.name + ''.join(self.forms)).__hash__()
 
 
+A1 = Station('A1', 'Kabaty', [], True)
+A2 = Station('A2', 'Natolin', [])
+A3 = Station('A3', 'Imielin', [])
+A4 = Station('A4', 'Stokłosy', [], True)
+A5 = Station('A5', 'Ursynów', [])
+A6 = Station('A6', 'Służew', ['Służewiec'])
+A7 = Station('A7', 'Wilanowska', [], True)
+A8 = Station('A8', 'Wierzbno', [])
+A9 = Station('A9', 'Racławicka', [])
+A10 = Station('A10', 'Pole Mokotowskie', [])
+A11 = Station('A11', 'Politechnika', [], True)
+A13 = Station('A13', 'Centrum', [], True)
+A14 = Station('A14', 'Świętokrzyska', [])
+A15 = Station('A15', 'Ratusz Arsenał', ['Ratusz-Arsenał'])
+A17 = Station('A17', 'Dworzec Gdański', ['Dw.Gdański', 'Dw. Gdański', 'Gdański'], True)
+A18 = Station('A18', 'Plac Wilsona', ['Pl.Wilsona', 'Pl. Wilsona', 'pl.Wilsona', 'plac Wilsona'], True)
+A19 = Station('A19', 'Marymont', [])
+A20 = Station('A20', 'Słodowiec', [], True)
+A21 = Station('A21', 'Stare Bielany', [])
+A22 = Station('A22', 'Wawrzyszew', [])
+A23 = Station('A23', 'Młociny', [], True)
+
+C4 = Station('C4', 'Bemowo', [], True)
+C5 = Station('C5', 'Ulrychów', [], False)
+C6 = Station('C6', 'Księcia Janusza', ['Ks. Janusza'], True)
+C7 = Station('C7', 'Młynów', [])
+C8 = Station('C8', 'Płocka', [])
+C9 = Station('C9', 'Rondo Daszyńskiego', [], True)
+C10 = Station('C10', 'Rondo ONZ', [], True)
+C11 = Station('C11', 'Świętokrzyska', [])
+C12 = Station('C12', 'Nowy Świat-Uniwersytet', [])
+C13 = Station('C13', 'Centrum Nauki Kopernik', [])
+C14 = Station('C14', 'Stadion Narodowy', ['Narodowy', 'Stadion'])
+C15 = Station('C15', 'Dworzec Wileński', ['Dw. Wileński', 'Wileński', 'Dw.Wileński'], True)
+C16 = Station('C16', 'Szwedzka', [])
+C17 = Station('C17', 'Targówek Mieszkaniowy', ['Targówek'], True)
+C18 = Station('C18', 'Trocka', [], True)
+
 M1 = [
-    Station('A1', 'Kabaty', [], True),
-    Station('A2', 'Natolin', []),
-    Station('A3', 'Imielin', []),
-    Station('A4', 'Stokłosy', [], True),
-    Station('A5', 'Ursynów', []),
-    Station('A6', 'Służew', ['Służewiec']),
-    Station('A7', 'Wilanowska', [], True),
-    Station('A8', 'Wierzbno', []),
-    Station('A9', 'Racławicka', []),
-    Station('A10', 'Pole Mokotowskie', []),
-    Station('A11', 'Politechnika', [], True),
-    Station('A13', 'Centrum', [], True),
-    Station('A14', 'Świętokrzyska', []),
-    Station('A15', 'Ratusz Arsenał', ['Ratusz-Arsenał']),
-    Station('A17', 'Dworzec Gdański', ['Dw.Gdański', 'Dw. Gdański', 'Gdański'], True),
-    Station('A18', 'Plac Wilsona', ['Pl.Wilsona', 'Pl. Wilsona', 'pl.Wilsona', 'plac Wilsona'], True),
-    Station('A19', 'Marymont', []),
-    Station('A20', 'Słodowiec', [], True),
-    Station('A21', 'Stare Bielany', []),
-    Station('A22', 'Wawrzyszew', []),
-    Station('A23', 'Młociny', [], True),
+    A1,
+    A2,
+    A3,
+    A4,
+    A5,
+    A6,
+    A7,
+    A8,
+    A9,
+    A10,
+    A11,
+    A13,
+    A14,
+    A15,
+    A17,
+    A18,
+    A19,
+    A20,
+    A21,
+    A22,
+    A23,
 ]
 
 M2 = [
-    Station('C4', 'Bemowo', [], True),
-    Station('C5', 'Ulrychów', [], False),
-    Station('C6', 'Księcia Janusza', ['Ks. Janusza'], True),
-    Station('C7', 'Młynów', []),
-    Station('C8', 'Płocka', []),
-    Station('C9', 'Rondo Daszyńskiego', [], True),
-    Station('C10', 'Rondo ONZ', [], True),
-    Station('C11', 'Świętokrzyska', []),
-    Station('C12', 'Nowy Świat-Uniwersytet', []),
-    Station('C13', 'Centrum Nauki Kopernik', []),
-    Station('C14', 'Stadion Narodowy', ['Narodowy', 'Stadion']),
-    Station('C15', 'Dworzec Wileński', ['Dw. Wileński', 'Wileński', 'Dw.Wileński'], True),
-    Station('C16', 'Szwedzka', []),
-    Station('C17', 'Targówek Mieszkaniowy', ['Targówek'], True),
-    Station('C18', 'Trocka', [], True),
+    C4,
+    C5,
+    C6,
+    C7,
+    C8,
+    C9,
+    C10,
+    C11,
+    C12,
+    C13,
+    C14,
+    C15,
+    C16,
+    C17,
+    C18,
 ]

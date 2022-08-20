@@ -42,17 +42,17 @@ class Not_Functioning_Service(Token):
 
 @dataclass
 class Not_Functioning_Facility(Token):
-    raw = ['wejście', 'wyjście', 'wind']
+    raw = ['zamknięte wejście', 'zamknięte wyjście', 'awaria wind']
     name = 'not_functioning'
 
 @dataclass
 class Not_Functioning_Station(Token):
-    raw = ['Wyłączone stacje z ruchu', 'wyłączone', 'Zamknięte zostały stacje metra', 'zamknięcie stacji', 'zamknię']
+    raw = ['Wyłączone stacje z ruchu', 'wyłączone', 'Zamknięte zostały stacje metra', 'zamknięcie stacji', 'zamknięto stację', 'zostaje zamknięta', 'zamyka się']  # 'zamknię'
     name = 'not_functioning'
 
 @dataclass
 class Reduced_Service(Token):
-    raw = ['zmniejszoną częstotliwością', 'utudnienia w kursowaniu', 'utrudni']
+    raw = ['zmniejszoną częstotliwością', 'utudnienia w kursowaniu']  # 'utrudni' - za utrudnienia przepraszmy
     name = 'reduced'
 
 @dataclass
@@ -85,6 +85,10 @@ class Metro_Replacement_Names(Token):
 # @dataclass
 # class Full_Stop(Token):
 #     raw = ['.']
+
+class Not(Token):
+    ''' General negator '''
+    raw = [' nie ']
 
 @dataclass
 class On(Token):
@@ -149,6 +153,7 @@ TOKENS = [
     Loop_Double,
     Metro_Replacement_Names,
     # Full_Stop,
+    Not,
     On,
     Recommended_Detour,
     Metro_Line('M1'),

@@ -27,7 +27,12 @@ def get_patterns():
         'reduced_service_1': [Metro_Line, 10, On, 10, 'relation', Reduced_Service],
         'reduced_service_2': [Reduced_Service, 32, Metro_Line],
         'shortened_service': [Shortened_Service, 6, On, 6, 'relation'],
-        'partly_down': [Not_Functioning_Service, 12, 'relation']
+        'partly_down': [Not_Functioning_Service, 12, 'relation'],
+        'facility_offline': [Not_Functioning_Facility, 24, Metro_Line, 8, Station],
+        'facility_offline_1': [Not_Functioning_Facility, 24, Station],
+        'facility_offline_2': [Station, 24, Not_Functioning_Facility],
+        'service_on': [Metro_Line, 12, On, 6, 'relation'],
+        'station_closed': [Not_Functioning_Station, 16, Station]
     }
 
     new_patterns = patterns
