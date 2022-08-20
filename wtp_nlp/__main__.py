@@ -1,16 +1,19 @@
-import json, html
+from cgitb import text
+import json, html, argparse
 
 import requests
 from rss_parser import Parser
 
 from wtp_nlp.nlp.language_processor import language_processor
+import wtp_nlp.utils.get_from_network
+import wtp_nlp.utils.gtfs_gen
 
 
 def maker():
-    """ Used for manually making tests """
+    """ This jerryrigged contrapciton is used for manually making tests """
     print('########')
     from bs4 import BeautifulSoup
-    body = html.unescape("<div><div><h1><br><s>Zamkni&#x119;ta stacja &#x2013; Trocka.</s></h1></div></div><p><s>Z przyczyn technicznych zamkni&#x119;to stacj&#x119;<strong> Trocka</strong>. Poci&#x105;gi linii <strong>M2</strong> kursuj&#x105; na trasie skr&#xF3;conej: <strong>Metro Ksi&#x119;cia Janusza &#x2013; Targ&#xF3;wek Mieszkaniowy</strong>.</s></p><p style=\"background-color:#f4f736\"><s>UWAGA! W celu zapewnienia komunikacji na odcinku na kt&#xF3;rym wyst&#x119;puje zak&#x142;&#xF3;cenie, autobusy linii <strong>140, 199, 245, 256, 262 340, 738</strong> w obydwu kierunkach wykonuj&#x105; podjazd do stacji <strong>Targ&#xF3;wek Mieszkaniowy</strong>.</s></p><ul><li><s>Linie <strong>140, 199, 245, 256, 262, 340,738</strong> w obydwu kierunkach: &#x2026;Trocka &#x2013; <strong>METRO TROCKA 03</strong> &#x2013; Unicka &#x2013; Handlowa &#x2013; Ossowskiego &#x2013; <strong>METRO TARG&#xD3;WEK MIESZKANIOWY 02</strong> &#x2013; Barkoci&#x144;ska &#x2013; Myszkowska &#x2013; Handlowa &#x2013; Unicka &#x2013; Trocka&#x2026; do w&#x142;asnych tras.</s></li></ul><p><em>Przepraszamy za powsta&#x142;e utrudnienia.</em></p>")
+    body = html.unescape("""<p><strong>08:41</strong></p><p><strong>Koniec utrudnie&#x144;. Trwa przywracanie rozk&#x142;adowej organizacji ruchu.</strong></p><p><strong>06:01</strong></p><p>Z przyczyn technicznych do odwo&#x142;ania wyst&#x119;puj&#x105; utrudnienia w kursowaniu poci&#x105;g&#xF3;w linii metra <strong>M2</strong> . Poci&#x105;gi mog&#x105; kursowa&#x107; ze zmniejszon&#x105; cz&#x119;stotliwo&#x15B;ci&#x105; . Linia kursuje w p&#x119;tli <strong>Trocka &#x2013; Rondo Daszy&#x144;skiego &#x2013; Trocka</strong> . Zamkni&#x119;te dla ruchu zostaj&#x105; stacje metra linii <strong>M2</strong> : Ksi&#x119;cia Janusza , M&#x142;yn&#xF3;w i P&#x142;ocka . Trwa uruchamianie autobusowej linii <strong>Z </strong>kursuj&#x105;cej na trasie : <strong>Ksi&#x119;cia Janusza &#x2013; G&#xF3;rczewska &#x2013; P&#x142;ocka &#x2013; Kasprzaka &#x2013; Rondo Daszy&#x144;skiego</strong> &#x2013; <strong>Kasprzaka &#x2013; P&#x142;ocka &#x2013; G&#xF3;rczewska &#x2013; Ksi&#x119;cia Janusza .</strong> Prosimy o korzystanie z autobusowej linii <strong>109</strong> obs&#x142;uguj&#x105;cej przystanki w zespo&#x142;ach przystankowych <strong>Rondo Daszy&#x144;skiego i Metro Ksi&#x119;cia Janusza</strong> . Mo&#x17C;na r&#xF3;wnie&#x17C; korzysta&#x107; z tramwajowej linii <strong>10</strong> obs&#x142;uguj&#x105;cej przystanki w zespo&#x142;ach przystankowych <strong>Rondo Daszy&#x144;skiego i Metro P&#x142;ocka.</strong></p><p><strong>Przepraszamy za utrudnienia.</strong></p>""")
     soup = BeautifulSoup(body, 'html.parser')
     processed_html = [s for s in soup.strings]
     text = ' '.join(processed_html)
@@ -21,30 +24,41 @@ def maker():
     console.print(language_processor(text))
 
 
-def get_impidements():
-    print('Calling wtp.waw.pl')
-    rss_url = "https://www.wtp.waw.pl/feed/?post_type=impediment"
-    xml = requests.get(rss_url)
+parser = argparse.ArgumentParser()
 
-    parser = Parser(xml=xml.content)
-    feed = parser.parse()
+input_src = parser.add_mutually_exclusive_group()
+input_src.add_argument('-n', '--network', help='Get alerts from RSS and mkuran (default)', action='store_true', default=True)  # masło maślane
+input_src.add_argument("-t", "--text", help="Pass alert text as an argument, skipping RSS")
+input_src.add_argument("-f", "--file", help="Pass alert text in a file, skipping RSS")
 
-    print('Looking for metro impedimets')
-    for item in feed.feed:
-        if any(x in item.title for x in ['M1', 'M2', 'Metro', 'Metra']):
-            print('Found one, calling mkuran to get parsed data (TODO: Self hosted parsing):', item.title)
-            # Now one should do some intensive html parsing bla bla bla, but why do that when you can use someone else's work?
-            alerts = requests.get('http://mkuran.pl/gtfs/warsaw/alerts.json')
-            alerts.raise_for_status()
-            alerts = alerts.json()
-            print("  Looking for the same impidement in mkuran's data")
-            for entry in alerts['alerts']:
-                if 'IMPEDIMENT' in entry.id and any(x in entry.routes for x in ['M1', 'M2', 'Metro', 'Metra']):
-                    # We found an impediment ythats about metro, lets proceed
-                    print('Found:', entry.title, ', passing to language-proccessor')
-                    processed = language_processor(entry.body)
-                    print(processed)
-                    return processed
+parser.add_argument("-o", "--out", help=" choose output format: gtfs or json (default: json)", default='json')
 
+args = parser.parse_args()
+# print(args)
 
-get_impidements()
+# 1. Get data from network or file
+if args.text:
+    data = args.text
+elif args.file:
+    with open(args.file, 'r') as f:
+        data = f.read()
+elif args.network:
+    data = wtp_nlp.utils.get_from_network.get_impidements()
+
+# print(data)
+if data is None:
+    print('No data/No impediments are taking place')
+    quit()
+
+# 2. Process data
+processed = language_processor(data)
+# print('Finished with: ', processed)
+
+# 3. Filter the results (discard NotImplemented)
+for pattern in processed:
+    if pattern['processed_to'] != NotImplemented:
+        print(pattern)
+    
+
+# 4. Generate some kind of output, be it json or gtfs feed
+

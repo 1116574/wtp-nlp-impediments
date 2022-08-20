@@ -15,7 +15,9 @@ def _get_rss() -> RSSFeed:
     return parser.parse()
 
 
-def get_impidements(feed=_get_rss(), alerts=None):
+def get_impidements(feed=None, alerts=None):
+    if feed is None:
+        feed = _get_rss()
     print('Looking for metro impedimets')
     for item in feed.feed:
         if any(x in item.title for x in ['M1', 'M2', 'Metro', 'Metra']):
@@ -27,10 +29,7 @@ def get_impidements(feed=_get_rss(), alerts=None):
                 alerts = alerts.json()
             print("  Looking for the same impidement in mkuran's data")
             for entry in alerts['alerts']:
-                if 'IMPEDIMENT' in entry["id"] and any(x in entry["routes"] for x in ['M1', 'M2', 'Metro', 'Metra']):
+                if 'IMPEDIMENT' in entry['id'] and any(x in entry['routes'] for x in ['M1', 'M2', 'Metro', 'Metra']):
                     # We found an impediment ythats about metro, lets proceed
-                    print('  Found:', entry["title"], ', passing to language-proccessor')
-                    processed = language_processor(entry["body"])
-                    print('  Finished with: ', processed)
-                    return processed
-
+                    print('  Found:', entry['title'], ', passing to language-proccessor')
+                    return entry['body']

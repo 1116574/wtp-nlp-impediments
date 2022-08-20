@@ -59,5 +59,5 @@ alert_content = {
 def test_get_impidements():
     parser = Parser(xml=rss_content)
     feed = parser.parse()
-    processed = get_from_network.get_impidements(feed=feed, alerts=alert_content)
-    assert processed[1]['processed_to'][0] == wtp_nlp.data.status.Loop
+    alert_body = get_from_network.get_impidements(feed=feed, alerts=alert_content)
+    assert alert_body == "Linia M1 kursuje w pętli Kabaty <-> Wilanowska"
