@@ -52,7 +52,7 @@ class Not_Functioning_Station(Token):
 
 @dataclass
 class Reduced_Service(Token):
-    raw = ['zmniejszoną częstotliwością', 'utudnienia w kursowaniu']  # 'utrudni' - za utrudnienia przepraszmy
+    raw = ['zmniejszoną częstotliwością', 'utrudnienia w kursowaniu']  # 'utrudni' - za utrudnienia przepraszmy
     name = 'reduced'
 
 @dataclass
@@ -138,6 +138,9 @@ class Reason:
     def raw(self):
         return [f'Z powodu {self.reason}',f'Z przyczyn {self.reason}']
 
+TOKEN_M1 = Metro_Line('M1')
+TOKEN_M2 = Metro_Line('M2')
+
 TOKENS = [
     Between,
     Replacement_Service,
@@ -156,8 +159,8 @@ TOKENS = [
     Not,
     On,
     Recommended_Detour,
-    Metro_Line('M1'),
-    Metro_Line('M2'),
+    TOKEN_M1,
+    TOKEN_M2,
     Reason('awari'),
     Reason('zdarzenia'),
     Reason('pozostawionego bagażu'),

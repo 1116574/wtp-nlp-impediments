@@ -1,6 +1,6 @@
 import json, html
 from pathlib import Path
-from wtp_nlp.__main__ import language_processor 
+from wtp_nlp.nlp.language_processor import language_processor 
 from wtp_nlp.data.metro_stations import *
 from wtp_nlp.data.tokens import *
 from wtp_nlp.data import status
@@ -44,24 +44,29 @@ class TestHistorical:
             },
         ]
 
-    def test_19(self):
+    def test_19_facility(self):
         result = language_processor(self.get_history(19))
         assert result[0]['processed_to'] == (status.Facilities, C8)
 
-    def test_20(self):
+    def test_20_loop(self):
         result = language_processor(self.get_history(20))
         assert result[2]['processed_to'] == (status.Loop, [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A13, A14, A15, A17, A18, A19, A20])
 
-    def test_35(self):
+    def test_35_loop(self):
         result = language_processor(self.get_history(35))
         assert result[7]['processed_to'] == (status.Loop, [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A13, A14, A15, A17, A18, A19, A20])
 
-    def test_66(self):
+    def test_66_loop(self):
         result = language_processor(self.get_history(66))
         assert result[3]['processed_to'] == (status.Loop, [A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A13, A14, A15, A17, A18, A19, A20])
 
-    def test_73(self):
+    def test_73_loop(self):
         result = language_processor(self.get_history(73))
-        assert result[4]['processed_to'] == (status.Loop, [A7, A8, A9, A10, A11, A13, A14, A15, A17, A18, A19, A20, A21, A22, A23])        
-            
+        assert result[4]['processed_to'] == (status.Loop, [A7, A8, A9, A10, A11, A13, A14, A15, A17, A18, A19, A20, A21, A22, A23])   
+
+    def test_3_degrade(self):
+        result = language_processor(self.get_history(3))
+        assert result[4]['processed_to'][0] == status.Loop
+        assert result[5]['processed_to'] == (status.Degraded, TOKEN_M2)
+
 # TestHistorical.test_17()

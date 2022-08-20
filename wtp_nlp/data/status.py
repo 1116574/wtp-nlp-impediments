@@ -59,7 +59,7 @@ def reduced_service_1(pattern):
 
 
 def reduced_service_2(pattern):
-    return Degraded, f'Degraded service on {pattern[2]}' 
+    return Degraded, pattern[2]
 
 
 def shortened_service(pattern):
