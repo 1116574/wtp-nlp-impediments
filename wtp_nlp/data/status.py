@@ -1,7 +1,7 @@
 from wtp_nlp.data.metro_stations import Station, M1, M2
 from wtp_nlp.data.tokens import Loop_Double
 
-def _service_between(start, end):
+def _service_between(start: Station, end: Station, sort=True) -> list[Station]:
     if start in M1:
         metro = M1
     elif start in M2:
@@ -13,8 +13,13 @@ def _service_between(start, end):
     loop = metro[start_index:end_index+1]
     if loop == []:
         # reverse the order lmao
-        return _service_between(end, start)
+        loop = _service_between(end, start)
+        if sort:
+            loop.sort(key=lambda station: int(station.id[1:]))
+        return loop
     else:
+        if sort:
+            loop.sort(key=lambda station: int(station.id[1:]))
         return loop
 
 class Status:
@@ -33,6 +38,9 @@ class Double_Loop(Status):
     pass
 
 class Facilities(Status):
+    pass
+
+class Replacement_Service(Status):
     pass
 
 # yea its not split according to concern, not semantic and all that
@@ -80,8 +88,12 @@ def shortened_service(pattern):
 
 def loop_double(pattern):
     # [Loop_Double, 4, 'relation', 6, And, 6, 'relation']
-    print(pattern)
-    return Loop_Double, [*_service_between(pattern[2], pattern[6]), *_service_between(pattern[8], pattern[12])]
+    # print(pattern)
+    return Loop_Double, _service_between(pattern[2], pattern[6]), _service_between(pattern[8], pattern[12])
+
+
+def loop_double_1(pattern):
+    return Loop_Double, _service_between(pattern[4], pattern[8]), _service_between(pattern[12], pattern[16])
 
 
 def partly_down(pattern):
@@ -93,6 +105,18 @@ def partly_down(pattern):
         metro = M2
     service = [station for station in metro if station not in excluded]
     return Double_Loop, service
+
+
+def shortened_service(pattern):
+    return Loop, _service_between(pattern[4], pattern[8])
+
+
+def shortened_service_1(pattern):
+    return Loop, _service_between(pattern[2], pattern[6])
+
+
+def shortened_service_2(pattern):
+    return Loop, _service_between(pattern[0], pattern[4])
 
 
 def facility_offline(pattern):
