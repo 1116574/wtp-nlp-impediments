@@ -1,3 +1,5 @@
+import logging
+
 from wtp_nlp.data.metro_stations import Station 
 import wtp_nlp.data.tokens as tokens
 from wtp_nlp.data.patterns import get_patterns
@@ -14,25 +16,33 @@ def matches(text: any, pattern: any) -> bool:
     Station(...), Station
     '''
 
+    logging.debug(f'Starting match for: {pattern} on {text}')
+
     # (5, 8); (3, 11); (9, 3)
     if type(text) == int and type(pattern) == int:
         if text < pattern:
+            logging.debug(f'  True - distance')
             return True  # (5, 8); (3, 11)
+
         else:
+            logging.debug(f'  False - distance')
             return False  # (9, 3)
 
     # (8, Station); (Metro_Line, 11)
     if (type(text) == int and type(pattern) != int) or (type(text) != int and type(pattern) == int):
+        logging.debug(f'  False - Type')
         return False
 
 
     # Both are classes or a class+instance
     # First, check if instance
     if isinstance(text, pattern):
+        logging.debug(f'  True - instance')
         return True
     
     # class+class
     if text is pattern:
+        logging.debug(f'  True - type')
         return True
 
 #                                                       end_index, matched_pattern
@@ -43,8 +53,9 @@ def find_pattern(full_text: list, pattern: list) -> list[int, list]:
     i = 0
     out = []
     for n_indx, node in enumerate(full_text):
+        logging.debug(f'enumerating {i} {n_indx}')
         if matches(node, pattern[i]):
-            # print('ye', i, node, pattern[i])
+            logging.debug(f'find_pattern matched at {i} node {node} with pattern {pattern[i]}')
             out.append(node)
             i += 1
         else: 
@@ -55,6 +66,7 @@ def find_pattern(full_text: list, pattern: list) -> list[int, list]:
             # print('sdsadgdfg', n_indx, full_text)
             i = 0
             # print('patter done', node)
+            logging.debug(f'find_pattern returning {n_indx}, {out}')
             return n_indx, out
 
     return False, False
@@ -67,9 +79,16 @@ def find_all_patterns(full_text, pattern):
     index = 0
     out = []
     while True:
+        logging.debug(f'calling finder on {full_text} to find {pattern}')
         index, occurence = find_pattern(full_text, pattern)
         if occurence:
             out.append(occurence)
+            # Edge case for when a 1-length pattern matches at the beggining of full_text
+            # Index will be 0, since thats where its found, however we want to cut it for next search and we can't cut 0th element, but n-amount from beginning.
+            # So for 0 we add 1 -> index = 1
+            # TODO: maybe we should add 1 to all indexes?
+            if index == 0:
+                index = 1
             full_text = full_text[index:]
             # repeat
         else:

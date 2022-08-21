@@ -1,4 +1,4 @@
-from cgitb import text
+import logging
 import json, html, argparse
 
 import requests
@@ -24,41 +24,50 @@ def maker():
     console.print(language_processor(text))
 
 
-parser = argparse.ArgumentParser()
+def main():
+    logging.basicConfig(level=logging.DEBUG)
+    logging.info('Started')
 
-input_src = parser.add_mutually_exclusive_group()
-input_src.add_argument('-n', '--network', help='Get alerts from RSS and mkuran (default)', action='store_true', default=True)  # masło maślane
-input_src.add_argument("-t", "--text", help="Pass alert text as an argument, skipping RSS")
-input_src.add_argument("-f", "--file", help="Pass alert text in a file, skipping RSS")
+    parser = argparse.ArgumentParser()
 
-parser.add_argument("-o", "--out", help=" choose output format: gtfs or json (default: json)", default='json')
+    input_src = parser.add_mutually_exclusive_group()
+    input_src.add_argument('-n', '--network', help='Get alerts from RSS and mkuran (default)', action='store_true', default=True)  # masło maślane
+    input_src.add_argument("-t", "--text", help="Pass alert text as an argument, skipping RSS")
+    input_src.add_argument("-f", "--file", help="Pass alert text in a file, skipping RSS")
 
-args = parser.parse_args()
-# print(args)
+    parser.add_argument("-o", "--out", help=" choose output format: gtfs or json (default: json)", default='json')
 
-# 1. Get data from network or file
-if args.text:
-    data = args.text
-elif args.file:
-    with open(args.file, 'r') as f:
-        data = f.read()
-elif args.network:
-    data = wtp_nlp.utils.get_from_network.get_impidements()
+    args = parser.parse_args()
+    logging.debug(args)
 
-# print(data)
-if data is None:
-    print('No data/No impediments are taking place')
-    quit()
+    # 1. Get data from network or file
+    if args.text:
+        data = args.text
+    elif args.file:
+        with open(args.file, 'r') as f:
+            data = f.read()
+    elif args.network:
+        data = wtp_nlp.utils.get_from_network.get_impidements()
 
-# 2. Process data
-processed = language_processor(data)
-# print('Finished with: ', processed)
+    # print(data)
+    if data is None:
+        print('No data/No impediments are taking place')
+        quit()
 
-# 3. Filter the results (discard NotImplemented)
-for pattern in processed:
-    if pattern['processed_to'] != NotImplemented:
-        print(pattern)
-    
+    # 2. Process data
+    processed = language_processor(data)
+    print('Finished with: ', processed)
 
-# 4. Generate some kind of output, be it json or gtfs feed
+    # 3. Filter the results (discard NotImplemented)
+    print('statuses')
+    for pattern in processed:
+        if pattern['processed_to'] != NotImplemented:
+            print(pattern)
+        
 
+    # 4. Generate some kind of output, be it json or gtfs feed
+    print(__name__)
+
+
+if __name__ == '__main__':
+    main()

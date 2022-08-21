@@ -1,3 +1,5 @@
+import logging
+
 from wtp_nlp.nlp.highlihter import tokenizer
 from wtp_nlp.nlp.compound_tokens import execute
 
@@ -22,7 +24,7 @@ def language_processor(text):
     while Dummy in token_collection:
         token_collection.remove(Dummy)
 
-    # print(token_collection)
+    logging.info(f'tokenizer returned: {token_collection}')
 
     # Find patterns & get their results
     patterns = get_patterns()
