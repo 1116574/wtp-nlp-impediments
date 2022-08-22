@@ -177,6 +177,7 @@ TOKENS = [
     Reason('awari'),
     Reason('zdarzenia'),
     Reason('pozostawionego bagażu'),
+    Reason('pozostawienia bagażu'),
     Reason('technicznych'),
     On_Station,
     Delays,
