@@ -57,7 +57,7 @@ class Reduced_Service(Token):
 
 @dataclass
 class Shortened_Service(Token):
-    raw = ['kursuje na trasie skróconej', 'kursują na trasie skróconej', 'na trasie skróconej']
+    raw = ['kursuje na trasie skróconej', 'kursują na trasie skróconej', 'na trasie skróconej', 'na skróconej trasie']
     name = 'reduced'
 
 @dataclass
@@ -77,9 +77,6 @@ class Loop(Token):
 class Loop_Double(Token):
     raw = ['dwóch pętlach', 'pętlach']
 
-@dataclass
-class Metro_Replacement_Names(Token):
-    raw = ['"ZA METRO"', 'ZA METRO', 'za "metro"', 'ZM1', 'ZM2', 'Z-1', 'Z-2']
 
 # TODO: This requires more logic to recognize abbriviaitons
 # @dataclass
@@ -138,8 +135,21 @@ class Reason:
     def raw(self):
         return [f'Z powodu {self.reason}',f'Z przyczyn {self.reason}']
 
-TOKEN_M1 = Metro_Line('M1')
-TOKEN_M2 = Metro_Line('M2')
+
+class Metro_Replacement_Names:
+    def __init__(self, repl_name) -> None:
+        self.repl_name = repl_name
+        self.raw = [repl_name]
+
+    def __repr__(self) -> str:
+        return f'< Metro_Replacement_Name: {self.repl_name} >'
+    
+    # @property
+    # def raw(self):
+    #     return [self.repl_name,]
+
+TOKEN_M1 = Metro_Line(' M1')  # leading space to avoid matching ZM1 (the replacement bus)
+TOKEN_M2 = Metro_Line(' M2')
 
 TOKENS = [
     Between,
@@ -154,7 +164,7 @@ TOKENS = [
     Tram_service,
     Loop,
     Loop_Double,
-    Metro_Replacement_Names,
+    # Metro_Replacement_Names,
     # Full_Stop,
     Not,
     On,
@@ -167,5 +177,12 @@ TOKENS = [
     Reason('technicznych'),
     On_Station,
     Delays,
+    Metro_Replacement_Names('"ZA METRO"'),
+    Metro_Replacement_Names('ZA METRO'),
+    Metro_Replacement_Names('za "metro"'),
+    Metro_Replacement_Names('ZM1'),
+    Metro_Replacement_Names('ZM2'),
+    Metro_Replacement_Names('Z-1'),
+    Metro_Replacement_Names('Z-2'),
 
 ]

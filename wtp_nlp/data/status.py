@@ -43,6 +43,9 @@ class Facilities(Status):
 class Replacement_Service(Status):
     pass
 
+class Reason(Status):
+    pass
+
 # yea its not split according to concern, not semantic and all that
 # but i just want it to work and its temporary
 
@@ -137,3 +140,14 @@ def facility_offline_3(pattern):
 
 def service_on(pattern):
     return Loop, _service_between(pattern[4], pattern[8])
+
+
+def reason(pattern):
+    return Reason, pattern[0]
+
+
+def replacement_service(pattern):
+    return Replacement_Service, True
+
+def replacement_service_1(pattern):
+    return Replacement_Service, pattern[0].repl_name
