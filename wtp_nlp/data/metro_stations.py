@@ -68,7 +68,7 @@ A23 = Station('A23', 'Młociny', [], True)
 
 C4 = Station('C4', 'Bemowo', [], True)
 C5 = Station('C5', 'Ulrychów', [], False)
-C6 = Station('C6', 'Księcia Janusza', ['Ks. Janusza'], True)
+C6 = Station('C6', 'Księcia Janusza', ['Ks. Janusza', 'Ks.Janusza'], True)
 C7 = Station('C7', 'Młynów', [])
 C8 = Station('C8', 'Płocka', [])
 C9 = Station('C9', 'Rondo Daszyńskiego', [], True)

@@ -42,7 +42,7 @@ class Not_Functioning_Service(Token):
 
 @dataclass
 class Not_Functioning_Facility(Token):
-    raw = ['zamknięte wejście', 'zamknięte wyjście', 'zamknięto wejście', 'zamknięto wyjście', 'awaria wind']
+    raw = ['zamknięte wejście', 'zamknięte wyjście', 'zamknięto wejście', 'zamknięto wyjście', 'awaria wind', 'nie działają windy', 'schody ruchome', 'windy']
     name = 'not_functioning'
 
 @dataclass
@@ -83,9 +83,10 @@ class Loop_Double(Token):
 # class Full_Stop(Token):
 #     raw = ['.']
 
-class Not(Token):
-    ''' General negator '''
-    raw = [' nie ']
+# class Not(Token):
+#     ''' General negator '''
+#     raw = [' nie ']
+# Disused + doesnt do anything important
 
 @dataclass
 class On(Token):
@@ -116,6 +117,9 @@ class Metro_Line:
 
     def __repr__(self) -> str:
         return f'< {self.line} >'
+
+    def __str__(self):
+        return self.line
     
     @property
     def raw(self):
@@ -169,7 +173,7 @@ TOKENS = [
     Loop_Double,
     # Metro_Replacement_Names,
     # Full_Stop,
-    Not,
+    # Not,
     On,
     Recommended_Detour,
     TOKEN_M1,

@@ -84,6 +84,10 @@ def reduced_service_2(pattern):
     return Degraded, pattern[2]
 
 
+def reduced_service_3(pattern):
+    return Degraded, pattern[0]
+
+
 def shortened_service(pattern):
     return Loop, _service_between(pattern[4], pattern[8])
 
@@ -139,6 +143,14 @@ def facility_offline_3(pattern):
 
 def service_on(pattern):
     return Loop, _service_between(pattern[4], pattern[8])
+
+
+def service_on_double(pattern):
+    return Double_Loop, _service_between(pattern[4], pattern[8]), _service_between(pattern[12], pattern[16])
+
+
+def station_closed(pattern):
+    return Degraded, pattern[2]
 
 
 def reason(pattern):

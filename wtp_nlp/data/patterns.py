@@ -29,8 +29,9 @@ def get_patterns():
         'loop_double': [Loop_Double, 4, 'relation', 6, And, 6, 'relation'],
         'loop_double_1': [Loop_Double, 4, On, 4, 'relation', 6, And, 6, 'relation'],
         'reduced_service': [Metro_Line, 10, Reduced_Service, 10, On, 10, 'relation'],
-        'reduced_service_1': [Metro_Line, 10, On, 10, 'relation', Reduced_Service],
+        'reduced_service_1': [Metro_Line, 10, On, 10, 'relation', 16, Reduced_Service],
         'reduced_service_2': [Reduced_Service, 32, Metro_Line],
+        'reduced_service_3': [Metro_Line, 32, Reduced_Service],
         'shortened_service': [Shortened_Service, 6, On, 6, 'relation'],
         'shortened_service_1': [Shortened_Service, 8, 'relation'],
         'shortened_service_2': ['relation', 8, Shortened_Service],
@@ -39,7 +40,8 @@ def get_patterns():
         'facility_offline_1': [Not_Functioning_Facility, 24, Station],
         'facility_offline_2': [Station, 24, Not_Functioning_Facility],
         'facility_offline_3': [Not_Functioning_Facility, 8, On_Station, 8, Station],
-        'service_on': [Metro_Line, 12, On, 6, 'relation'],
+        'service_on': [Metro_Line, 12, On, 6, 'relation', 2, Full_Stop],  # Too generic, but with full stop maybe salvagable? Test #35 fails if we disable outright.
+        'service_on_double': [Metro_Line, 12, On, 6, 'relation', 6, And, 6, 'relation', 2, Full_Stop],
         'station_closed': [Not_Functioning_Station, 16, Station],
 
         # Special boolean-flag-like patterns (?)
