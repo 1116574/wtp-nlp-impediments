@@ -36,8 +36,10 @@ def main(args = None):
     input_src.add_argument("-f", "--file", help="Pass alert text in a file, skipping RSS")
 
     parser.add_argument("-o", "--out", help="choose output format: gtfs or json (default: json)", default='json')
-    parser.add_argument("-dt", "--debug_tokenizer", help="run only tokenizer and quit", default=False, action='store_true')
+    parser.add_argument("-of", "--out_file", help="filename for output", default=False)
     
+    parser.add_argument("-dt", "--debug_tokenizer", help="run only tokenizer then quit", default=False, action='store_true')
+    parser.add_argument("-dp", "--debug_pattern", help="run only tokenizer and pattern matcher then quit", default=False, action='store_true')
     parser.add_argument("-v", "--verbosity", help="set verbosity level", default=2, action='count')
 
     if not args:
@@ -76,6 +78,12 @@ def main(args = None):
     # 2. Process data
     processed = language_processor(data)
     logging.debug(f'language_processor returned: {processed}')
+    # 2.5 Check for debug flags
+    if args.debug_pattern:
+        from rich import console
+        con = console.Console()
+        con.print(processed)
+        quit()        
 
     # 3. Filter the results (discard NotImplemented)
     filtered = []
@@ -91,8 +99,18 @@ def main(args = None):
         logging.info('json:')
         # print(filtered)
         output = wtp_nlp.utils.output.generate_json(filtered)
-        print(output)
-        return output
+    elif args.out == 'gtfs':
+        logging.info('gtfs:')
+        output = wtp_nlp.utils.output.generate_gtfs(filtered)
+
+    # 5. Save (optional)
+    if args.out_file:
+        with open(args.out_file, 'w') as f:
+            json.dump(output, f, indent=4)
+    
+    # The end.
+    print(output)
+    return output
 
 
     # print(__name__)
