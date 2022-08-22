@@ -69,7 +69,7 @@ def generate_json(parsed):
         if status is Replacement_Service:
             if data == True:
                 template["replacement_service"]["exists"] = True
-            elif data == 'by_extension':  # bad
+            elif data[0] == 'by_extension':  # bad
                 template["replacement_service"]["exists"] = True
                 template["replacement_service"]["by_extension"] = True
             else:

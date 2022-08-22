@@ -102,7 +102,7 @@ class Recommended_Detour(Token):
 
 @dataclass
 class Detour_By_Extension(Token):
-    raw = ['podjazd', 'na trasę wydłużoną', 'trasie wydłużonej', 'wydłużone',]
+    raw = ['podjazd', 'na trasę wydłużoną', 'trasie wydłużonej', 'wydłużone', 'wykonują podjazdy']
 
 @dataclass
 class Delays(Token):
