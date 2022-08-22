@@ -40,6 +40,9 @@ class Station:
     def __hash__(self) -> int:
         return (self.name + ''.join(self.forms)).__hash__()
 
+    def __str__(self) -> str:
+        return self.id
+
 
 A1 = Station('A1', 'Kabaty', [], True)
 A2 = Station('A2', 'Natolin', [])

@@ -24,7 +24,8 @@ def language_processor(text):
     while Dummy in token_collection:
         token_collection.remove(Dummy)
 
-    logging.info(f'tokenizer returned: {token_collection}')
+    logger = logging.getLogger('nlp')
+    logger.debug(f'tokenizer returned: {token_collection}')
 
     # Find patterns & get their results
     patterns = get_patterns()

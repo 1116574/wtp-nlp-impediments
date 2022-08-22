@@ -1,5 +1,4 @@
 from wtp_nlp.data.metro_stations import Station, M1, M2
-from wtp_nlp.data.tokens import Loop_Double
 
 def _service_between(start: Station, end: Station, sort=True) -> list[Station]:
     if start in M1:
@@ -62,11 +61,11 @@ def loop_1(pattern):
 
 
 def loop_ext(pattern):
-    return Loop, loop(pattern)
+    return loop(pattern)
 
 
 def loop_ext_1(pattern):
-    return Loop, loop_1(pattern)
+    return loop_1(pattern)
 
 
 def reduced_service(pattern):
@@ -92,11 +91,11 @@ def shortened_service(pattern):
 def loop_double(pattern):
     # [Loop_Double, 4, 'relation', 6, And, 6, 'relation']
     # print(pattern)
-    return Loop_Double, _service_between(pattern[2], pattern[6]), _service_between(pattern[8], pattern[12])
+    return Double_Loop, _service_between(pattern[2], pattern[6]), _service_between(pattern[10], pattern[14])
 
 
 def loop_double_1(pattern):
-    return Loop_Double, _service_between(pattern[4], pattern[8]), _service_between(pattern[12], pattern[16])
+    return Double_Loop, _service_between(pattern[4], pattern[8]), _service_between(pattern[12], pattern[16])
 
 
 def partly_down(pattern):
@@ -151,3 +150,6 @@ def replacement_service(pattern):
 
 def replacement_service_1(pattern):
     return Replacement_Service, pattern[0].repl_name
+
+def replacement_service_by_extension(pattern):
+    return Replacement_Service, 'by_extension'

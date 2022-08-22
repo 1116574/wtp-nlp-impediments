@@ -130,6 +130,9 @@ class Reason:
 
     def __repr__(self) -> str:
         return f'< Reason: {self.reason} >'
+
+    def __str__(self) -> str:
+        return self.reason
     
     @property
     def raw(self):
@@ -184,5 +187,6 @@ TOKENS = [
     Metro_Replacement_Names('ZM2'),
     Metro_Replacement_Names('Z-1'),
     Metro_Replacement_Names('Z-2'),
+    Metro_Replacement_Names('linii Z'),
 
 ]
