@@ -26,10 +26,7 @@ def maker(broken_html):
     return text
 
 
-def main():
-    logging.basicConfig(level=logging.INFO)
-    logging.info('Started')
-
+def main(args = None):
     parser = argparse.ArgumentParser()
 
     input_src = parser.add_mutually_exclusive_group()
@@ -40,8 +37,17 @@ def main():
 
     parser.add_argument("-o", "--out", help="choose output format: gtfs or json (default: json)", default='json')
     parser.add_argument("-dt", "--debug_tokenizer", help="run only tokenizer and quit", default=False, action='store_true')
+    
+    parser.add_argument("-v", "--verbosity", help="set verbosity level", default=2, action='count')
 
-    args = parser.parse_args()
+    if not args:
+        args = parser.parse_args()  # from command line
+    # else: # args come from main(args), probably from test
+
+    verbosity = (5 - args.verbosity) * 10
+    logging.basicConfig(level=verbosity)
+    logging.info('Started')
+
     logging.debug(args)
 
     # 1. Get data from network or file
@@ -69,17 +75,27 @@ def main():
 
     # 2. Process data
     processed = language_processor(data)
-    print('Finished with: ', processed)
+    logging.debug(f'language_processor returned: {processed}')
 
     # 3. Filter the results (discard NotImplemented)
-    print('statuses')
+    filtered = []
+    # print('statuses')
     for pattern in processed:
         if pattern['processed_to'] != NotImplemented:
-            print(pattern)
+            # print(pattern)
+            filtered.append(pattern)
         
 
     # 4. Generate some kind of output, be it json or gtfs feed
-    print(__name__)
+    if args.out == 'json':
+        logging.info('json:')
+        # print(filtered)
+        output = wtp_nlp.utils.output.generate_json(filtered)
+        print(output)
+        return output
+
+
+    # print(__name__)
 
 
 if __name__ == '__main__':

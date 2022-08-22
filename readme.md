@@ -47,6 +47,7 @@ Quick overview of possible states
 ### ok
 The service is running normally.
 ### degraded
+TODO: Degraded status is currently unaviable in normal output.
 There are (possibly undefinied) delays on the network or between stations, or there are less trains than usual. (doc: tokens `Delays` and `Reduced_Service`)
 ### loop/double_loop
 Service operates in a loop, like when last 3 stations are offline, or 2 distinct loops, e.g. when center section is offline then services are split into northern and southern loops. (doc: tokens `Shortened_Service`, `Not_Functioning_Service` and `Not_Functioning_Station`)
