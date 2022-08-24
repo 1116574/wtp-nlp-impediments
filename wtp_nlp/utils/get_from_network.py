@@ -1,5 +1,6 @@
 from wtp_nlp.nlp.language_processor import language_processor
 
+from datetime import datetime
 import requests
 from rss_parser import Parser
 from rss_parser.models import RSSFeed
@@ -18,7 +19,7 @@ def _get_rss() -> RSSFeed:
 def get_impidements(feed=None, alerts=None):
     if feed is None:
         feed = _get_rss()
-    print('Looking for metro impedimets')
+    print(f'Looking for metro impedimets at {datetime.now().isoformat()}')
     for item in feed.feed:
         if any(x in item.title for x in ['M1', 'M2', 'Metro', 'Metra']):
             print('Found one, calling mkuran to get parsed data (TODO: Self hosted parsing):', item.title)
@@ -33,3 +34,5 @@ def get_impidements(feed=None, alerts=None):
                     # We found an impediment ythats about metro, lets proceed
                     print('  Found:', entry['title'], ', passing to language-proccessor')
                     return entry['body']
+
+    print('No problems found')

@@ -63,13 +63,13 @@ def main(args = None):
     elif args.network:
         data = wtp_nlp.utils.get_from_network.get_impidements()
 
-    # Quickfix - add a leading garbage character - helps matching M1/M2
-    data = 'G ' + data
-
     # print(data)
     if data is None:
         logging.info('No data/No impediments are taking place')
         quit()
+    else:
+        # Quickfix - add a leading garbage character - helps matching M1/M2
+        data = 'G ' + data
 
     # 1.5. Check for debug flags
     if args.debug_tokenizer:
