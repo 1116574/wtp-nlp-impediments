@@ -1,4 +1,5 @@
-from wtp_nlp.data.metro_stations import Station, M1, M2
+from .metro_stations import Station, M1, M2
+
 
 def _service_between(start: Station, end: Station, sort=True) -> list[Station]:
     if start in M1:
