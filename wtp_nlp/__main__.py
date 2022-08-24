@@ -27,6 +27,13 @@ def maker(broken_html):
     return text
 
 
+def save(args, output):
+    # 5. Save (optional)
+    if args.out_file:
+        with open(args.out_file, 'w') as f:
+            json.dump(output, f, indent=4)
+
+
 def main(args = None):
     parser = argparse.ArgumentParser()
 
@@ -65,13 +72,6 @@ def main(args = None):
     elif args.network:
         data = wtp_nlp.utils.get_from_network.get_impidements()
 
-    # print(data)
-    if data is None:
-        logging.info('No data/No impediments are taking place')
-        quit()
-    else:
-        # Quickfix - add a leading garbage character - helps matching M1/M2
-        data = 'G ' + data
 
     # 1.5. Check for debug flags
     if args.debug_tokenizer:
@@ -79,6 +79,23 @@ def main(args = None):
         con = console.Console()
         con.print(wtp_nlp.nlp.highlihter.tokenizer(data))
         quit()
+
+    # 2. Generate timestamp, if requested
+    if args.out_timestamp:
+        timestamp = datetime.now().isoformat()
+    else:
+        timestamp = False
+
+    # If no data, generate a stub with date
+    if data is None:
+        logging.info('No data/No impediments are taking place')
+        output = wtp_nlp.utils.output.json_stub(timestamp=timestamp)
+        save(args, output)
+        quit()
+    else:
+        # Quickfix - add a leading garbage character - helps matching M1/M2
+        data = 'G ' + data
+
 
     # 2. Process data
     processed = language_processor(data)
@@ -98,14 +115,7 @@ def main(args = None):
             # print(pattern)
             filtered.append(pattern)
 
-    
-    # 4. Generate timestamp, if requested
-    if args.out_timestamp:
-        timestamp = datetime.now().isoformat()
-    else:
-        timestamp = False
-
-    # 5. Generate some kind of output, be it json or gtfs feed
+    # 4. Generate some kind of output, be it json or gtfs feed
     if args.out == 'json':
         logging.info('json:')
         # print(filtered)
@@ -114,10 +124,7 @@ def main(args = None):
         logging.info('gtfs:')
         output = wtp_nlp.utils.output.generate_gtfs(filtered)
 
-    # 6. Save (optional)
-    if args.out_file:
-        with open(args.out_file, 'w') as f:
-            json.dump(output, f, indent=4)
+    save(args, output)
     
     # The end.
     print(output)

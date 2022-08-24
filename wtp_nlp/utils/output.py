@@ -8,6 +8,10 @@ def generate_gtfs():
     pass
 
 
+def json_stub(timestamp):
+    # This whole module should be better arranged, but mvp
+    return {"timestamp": timestamp, "conditions": None}
+
 def generate_json(parsed, timestamp=False):
     logger = logging.getLogger('output')
     logger.debug(f'json:recieved: {parsed}')
