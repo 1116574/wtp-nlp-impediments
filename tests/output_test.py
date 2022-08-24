@@ -13,6 +13,7 @@ class Args:
         self.debug_pattern = False
         self.out_file = False
         self.verbosity = 3
+        self.out_timestamp = False
 
 
 def test_json():

@@ -8,7 +8,7 @@ def generate_gtfs():
     pass
 
 
-def generate_json(parsed):
+def generate_json(parsed, timestamp=False):
     logger = logging.getLogger('output')
     logger.debug(f'json:recieved: {parsed}')
 
@@ -91,7 +91,8 @@ def generate_json(parsed):
             current_condition["affected"] = str(data)
             template["conditions"].append(current_condition)
 
-    pass
+    if timestamp:
+        template["timestamp"] = timestamp
 
     return template
 

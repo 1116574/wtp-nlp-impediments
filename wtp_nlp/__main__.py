@@ -1,5 +1,6 @@
 import logging
 import json, html, argparse
+from datetime import datetime
 
 import requests
 from rss_parser import Parser
@@ -37,6 +38,7 @@ def main(args = None):
 
     parser.add_argument("-o", "--out", help="choose output format: gtfs or json (default: json)", default='json')
     parser.add_argument("-of", "--out_file", help="filename for output", default=False)
+    parser.add_argument("-ot", "--out_timestamp", help="timestamp the output", default=True)
     
     parser.add_argument("-dt", "--debug_tokenizer", help="run only tokenizer then quit", default=False, action='store_true')
     parser.add_argument("-dp", "--debug_pattern", help="run only tokenizer and pattern matcher then quit", default=False, action='store_true')
@@ -95,18 +97,24 @@ def main(args = None):
         if pattern['processed_to'] != NotImplemented:
             # print(pattern)
             filtered.append(pattern)
-        
 
-    # 4. Generate some kind of output, be it json or gtfs feed
+    
+    # 4. Generate timestamp, if requested
+    if args.out_timestamp:
+        timestamp = datetime.now().isoformat()
+    else:
+        timestamp = False
+
+    # 5. Generate some kind of output, be it json or gtfs feed
     if args.out == 'json':
         logging.info('json:')
         # print(filtered)
-        output = wtp_nlp.utils.output.generate_json(filtered)
+        output = wtp_nlp.utils.output.generate_json(filtered, timestamp=timestamp)
     elif args.out == 'gtfs':
         logging.info('gtfs:')
         output = wtp_nlp.utils.output.generate_gtfs(filtered)
 
-    # 5. Save (optional)
+    # 6. Save (optional)
     if args.out_file:
         with open(args.out_file, 'w') as f:
             json.dump(output, f, indent=4)
