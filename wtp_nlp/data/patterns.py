@@ -42,6 +42,8 @@ def get_patterns():
         'facility_offline_3': [Not_Functioning_Facility, 8, On_Station, 8, Station],
         'service_on': [Metro_Line, 12, On, 6, 'relation', 2, Full_Stop],  # Too generic, but with full stop maybe salvagable? Test #35 fails if we disable outright.
         'service_on_double': [Metro_Line, 12, On, 6, 'relation', 6, And, 6, 'relation', 2, Full_Stop],
+        'service_on_reason': [Metro_Line, 12, On, 6, 'relation', 6, Reason, 6, Full_Stop],
+        'service_on_reason_double': [Metro_Line, 12, On, 6, 'relation', 6, And, 6, 'relation', 6, Reason, 6, Full_Stop],
         'station_closed': [Not_Functioning_Station, 16, Station],
 
         # Special boolean-flag-like patterns (?)
