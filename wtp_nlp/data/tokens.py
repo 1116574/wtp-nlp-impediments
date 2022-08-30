@@ -134,7 +134,7 @@ class Metro_Line:
         return f'< {self.line} >'
 
     def __str__(self):
-        return self.line
+        return self.line.strip()  # this is an offle fix for ' M1' -> 'M1'
     
     @property
     def raw(self):
