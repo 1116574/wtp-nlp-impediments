@@ -85,14 +85,14 @@ def generate_json(parsed, timestamp=False):
             logger.debug(f'json:facilities: {data}')
             current_condition = copy.copy(condition)
             current_condition["status"] = 'Facilities'
-            current_condition["affected"] = str(data)
+            current_condition["affected"] = [str(entry) for entry in data]
             template["conditions"].append(current_condition)
 
         elif status is Degraded:
             logger.debug(f'json:degraded: {data}')
             current_condition = copy.copy(condition)
             current_condition["status"] = 'Degraded'
-            current_condition["affected"] = str(data)
+            current_condition["affected"] = [str(entry) for entry in data]
             template["conditions"].append(current_condition)
         
         elif status is Disabled:
