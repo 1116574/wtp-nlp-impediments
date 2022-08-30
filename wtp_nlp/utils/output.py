@@ -62,6 +62,7 @@ def generate_json(parsed, timestamp=False):
                     affected.append({
                         "name": station.name,
                         "id": station.id,
+                        "gtfs_id": station.gtfs_id
                     })
                 current_condition["affected"].append(affected)
             template["conditions"].append(current_condition)
