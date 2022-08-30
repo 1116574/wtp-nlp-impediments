@@ -97,6 +97,12 @@ class Loop_Double(Token):
 class On(Token):
     raw = ['na trasie', 'na odcinku']
 
+
+@dataclass
+class Run(Token):
+    raw = ['pociągi kursują', 'kursują']
+
+
 @dataclass
 class On_Station(Token):
     raw = ['na stacji', 'w rejonie stacji']
@@ -184,6 +190,7 @@ TOKENS = [
     # Full_Stop,
     # Not,
     On,
+    Run,
     Recommended_Detour,
     TOKEN_M1,
     TOKEN_M2,

@@ -92,6 +92,10 @@ def reduced_service_3(pattern):
     return Degraded, pattern[0]
 
 
+def reduced_service_4(pattern):
+    return Degraded, pattern[2], pattern[6]
+
+
 def shortened_service(pattern):
     return Loop, _service_between(pattern[4], pattern[8])
 
