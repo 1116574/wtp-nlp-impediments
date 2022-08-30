@@ -31,6 +31,9 @@ class Ok(Status):
 class Degraded(Status):
     pass
 
+class Disabled(Status):
+    pass
+
 class Loop(Status):
     pass
 
@@ -103,6 +106,9 @@ def loop_double_1(pattern):
     return Double_Loop, _service_between(pattern[4], pattern[8]), _service_between(pattern[12], pattern[16])
 
 
+def loop_double_2(pattern):
+    return loop_double_1(pattern)
+
 def partly_down(pattern):
     # [Not_Functioning_Service, 12, 'relation']
     excluded = _service_between(pattern[2], pattern[6])
@@ -159,6 +165,12 @@ def service_on_reason_double(pattern):
 def station_closed(pattern):
     return Degraded, pattern[2]
 
+def skipping(pattern):
+    pass  # TODO: Implement.
+    return Double_Loop, _service_between(pattern[2], pattern[10]), _service_between(pattern[6], pattern[10])
+
+def all_down(pattern):
+    return Disabled, ['M1', 'M2']
 
 def reason(pattern):
     return Reason, pattern[0]

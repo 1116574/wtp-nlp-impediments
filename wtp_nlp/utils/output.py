@@ -1,6 +1,6 @@
 from multiprocessing import current_process
 import wtp_nlp
-from wtp_nlp.data.status import Ok, Degraded, Loop, Double_Loop, Facilities, Replacement_Service, Reason
+from wtp_nlp.data.status import Disabled, Ok, Degraded, Loop, Double_Loop, Facilities, Replacement_Service, Reason
 
 import logging, copy
 
@@ -37,8 +37,8 @@ def generate_json(parsed, timestamp=False):
 
         logger.debug(f'json:entry: {status} {data}')
 
+        current_condition = copy.copy(condition)
         if status is Loop:
-            current_condition = copy.copy(condition)
 
             current_condition["status"] = 'Loop'
             affected = []
@@ -51,7 +51,7 @@ def generate_json(parsed, timestamp=False):
             template["conditions"].append(current_condition)
 
 
-        if status is Double_Loop:
+        elif status is Double_Loop:
             current_condition = copy.copy(condition)
 
             current_condition["status"] = 'Double_Loop'
@@ -67,10 +67,10 @@ def generate_json(parsed, timestamp=False):
             template["conditions"].append(current_condition)
     
 
-        if status is Reason:
+        elif status is Reason:
             template["reason"] = str(data[0])
 
-        if status is Replacement_Service:
+        elif status is Replacement_Service:
             if data[0] == True:
                 template["replacement_service"]["exists"] = True
             elif data[0] == 'by_extension':  # bad
@@ -81,18 +81,23 @@ def generate_json(parsed, timestamp=False):
                 template["replacement_service"]["exists"] = True
                 template["replacement_service"]["name"] = data[0]  # bad coupling here, but whatev
     
-        if status is Facilities:
+        elif status is Facilities:
             logger.debug(f'json:facilities: {data}')
             current_condition = copy.copy(condition)
             current_condition["status"] = 'Facilities'
             current_condition["affected"] = str(data)
             template["conditions"].append(current_condition)
 
-        if status is Degraded:
+        elif status is Degraded:
             logger.debug(f'json:degraded: {data}')
             current_condition = copy.copy(condition)
             current_condition["status"] = 'Degraded'
             current_condition["affected"] = str(data)
+            template["conditions"].append(current_condition)
+        
+        elif status is Disabled:
+            current_condition["status"] = 'Disabled'
+            current_condition["affected"] = data
             template["conditions"].append(current_condition)
 
     if timestamp:

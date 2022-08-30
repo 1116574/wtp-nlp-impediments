@@ -36,8 +36,13 @@ class Replacement_Service(Token):
 
 
 @dataclass
+class Whole_Metro(Token):
+    raw = ['obie linie metra']
+
+
+@dataclass
 class Not_Functioning_Service(Token):
-    raw = ['nie funkcjonują', 'nie kursują', 'wstrzymany', 'wstrzymane', 'wyłączenie']
+    raw = ['nie funkcjonują', 'nie kursują', 'wstrzymany', 'wstrzymane', 'wyłączenie', 'nie kursuje']
     name = 'not_functioning'
 
 @dataclass
@@ -94,7 +99,7 @@ class On(Token):
 
 @dataclass
 class On_Station(Token):
-    raw = ['na stacji']
+    raw = ['na stacji', 'w rejonie stacji']
 
 @dataclass
 class Recommended_Detour(Token):
@@ -108,6 +113,10 @@ class Detour_By_Extension(Token):
 class Delays(Token):
     raw = ['możliwe opóźnienia', 'opóźnie']
 
+
+@dataclass
+class Skipping(Token):
+    raw = ['z ominięciem', 'pomijając']
 
 class Metro_Line:
     __match_args__ = ('line',)
@@ -182,16 +191,21 @@ TOKENS = [
     Reason('zdarzenia'),
     Reason('pozostawionego bagażu'),
     Reason('pozostawienia bagażu'),
+    Reason('pozostawionej bomby'),
+    Reason('ataku terrorystycznego'),
     Reason('technicznych'),
     On_Station,
     Delays,
     Metro_Replacement_Names('"ZA METRO"'),
     Metro_Replacement_Names('ZA METRO'),
     Metro_Replacement_Names('za "metro"'),
+    Metro_Replacement_Names('za „Metro”'),  # unicode, breaking text parsing since 2002
     Metro_Replacement_Names('ZM1'),
     Metro_Replacement_Names('ZM2'),
     Metro_Replacement_Names('Z-1'),
     Metro_Replacement_Names('Z-2'),
     Metro_Replacement_Names('linii Z'),
+    Skipping,
+    Whole_Metro,
 
 ]

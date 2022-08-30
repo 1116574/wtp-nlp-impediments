@@ -22,12 +22,13 @@ def get_patterns():
         'relation': [Station, 6, Between, 6, Station],
         'relation_ext': [Station, 6, Between, 6, Station, 6, Between, 6, Station], # '_same-0' # there is currently no way to specify 'same as first index'
         'reason': [Reason, 10, On_Station, 10, Station],
-        'loop': [Loop, 4, 'relation'],
+        'loop': [Loop, 4, 'relation'],  # TODO: [Loop, 4, 'relation', Optional(8), Not(Skipping)]
         'loop_1': [Loop, 4, On, 4, 'relation'],
         'loop_ext': [Loop, 4, 'relation_ext'],
         'loop_ext_1': [Loop, 4, On, 4, 'relation_ext'],
         'loop_double': [Loop_Double, 4, 'relation', 6, And, 6, 'relation'],
         'loop_double_1': [Loop_Double, 4, On, 4, 'relation', 6, And, 6, 'relation'],
+        'loop_double_2': [Full_Stop, 24, On, 4, 'relation', 6, And, 6, 'relation'],
         'reduced_service': [Metro_Line, 10, Reduced_Service, 10, On, 10, 'relation'],
         'reduced_service_1': [Metro_Line, 10, On, 10, 'relation', 16, Reduced_Service],
         'reduced_service_2': [Reduced_Service, 32, Metro_Line],
@@ -45,6 +46,8 @@ def get_patterns():
         'service_on_reason': [Metro_Line, 12, On, 6, 'relation', 6, Reason, 6, Full_Stop],
         'service_on_reason_double': [Metro_Line, 12, On, 6, 'relation', 6, And, 6, 'relation', 6, Reason, 6, Full_Stop],
         'station_closed': [Not_Functioning_Station, 16, Station],
+        'skipping': [Loop, 4, 'relation', 8, Skipping, 12, Station],
+        'all_down': [Whole_Metro, 8, Not_Functioning_Service],
 
         # Special boolean-flag-like patterns (?)
         'replacement_service': [Replacement_Service],
