@@ -3,7 +3,6 @@ from .metro_stations import A14, C11
 
 
 def _service_between(start: Station, end: Station, sort=True) -> list[Station]:
-    print(start, end)
     if start in M1 and end in M1:
         metro = M1
     elif start in M2 and end in M2:
@@ -12,7 +11,6 @@ def _service_between(start: Station, end: Station, sort=True) -> list[Station]:
         metro = M2
         start = C11
     elif start in M2 and end in M1 and start.id == 'C11':  # (start) Świętokrzyska on M2 but should be on M1
-        print('situation #2')
         metro = M1
         start = A14
     elif start in M1 and end in M2 and end.id == 'A23':  # (end) Świętokrzyska on M1 but should be on M2
@@ -25,7 +23,6 @@ def _service_between(start: Station, end: Station, sort=True) -> list[Station]:
     start_index = metro.index(start)
     end_index = metro.index(end)
 
-    print(start_index, end_index)
 
     loop = metro[start_index:end_index+1]
     if loop == []:
@@ -119,7 +116,6 @@ def shortened_service(pattern):
 
 def loop_double(pattern):
     # [Loop_Double, 4, 'relation', 6, And, 6, 'relation']
-    print('sfgsfg', pattern[10], pattern[14])
     return Double_Loop, _service_between(pattern[2], pattern[6]), _service_between(pattern[10], pattern[14])
 
 
