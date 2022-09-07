@@ -14,6 +14,7 @@ class Args:
         self.out_file = False
         self.verbosity = 3
         self.out_timestamp = False
+        self.include = False
 
 
 def test_json():
