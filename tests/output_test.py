@@ -18,23 +18,25 @@ class Args:
 
 def test_json():
     args = Args('Z powodu awarii metro kursuje w pętli Słodowiec-Marymont. Uruchomiono linię zastępczą ZM1', 'json')
-    assert __main__.main(args) == {'conditions': [{'status': 'Loop', 'affected': [{'name': 'Marymont', 'id': 'A19'}, {'name': 'Słodowiec', 'id': 'A20'}]}], 'reason': 'awari', 'replacement_service': {'exists': True, 'name': 'ZM1', 'by_extension': False}}
+    assert __main__.main(args) == {'conditions': [{'status': 'Loop', 'affected': [{'name': 'Marymont', 'id': 'A19', 'gtfs_id': '6005m'}, {'name': 'Słodowiec', 'id': 'A20', 'gtfs_id': '6006m'}]}], 'reason': 'awari', 'replacement_service': {'exists': True, 'name': 'ZM1', 'by_extension': False}}
 
 
 def test_json_multiple_conditions():
     args = Args('Z powodu awarii metro M1 kursuje w pętli Słodowiec-Marymont, a M2 w pętli Trocka-Dw.Wileński. Uruchomiono linię zastępczą ZM1', 'json')
-    assert __main__.main(args) == {
+    goal = {
         "conditions": [
             {
                 "status": "Loop",
                 "affected": [
                     {
                         "name": "Marymont",
-                        "id": "A19"
+                        "id": "A19",
+                        "gtfs_id": "6005m"
                     },
                     {
                         "name": "S\u0142odowiec",
-                        "id": "A20"
+                        "id": "A20",
+                        "gtfs_id": "6006m"
                     }
                 ]
             },
@@ -43,19 +45,23 @@ def test_json_multiple_conditions():
                 "affected": [
                     {
                         "name": "Dworzec Wile\u0144ski",
-                        "id": "C15"
+                        "id": "C15",
+                        "gtfs_id": "1003m"
                     },
                     {
                         "name": "Szwedzka",
-                        "id": "C16"
+                        "id": "C16",
+                        "gtfs_id": "1526m"
                     },
                     {
                         "name": "Targ\u00f3wek Mieszkaniowy",
-                        "id": "C17"
+                        "id": "C17",
+                        "gtfs_id": "1137m"
                     },
                     {
                         "name": "Trocka",
-                        "id": "C18"
+                        "id": "C18",
+                        "gtfs_id": "1140m"                  
                     }
                 ]
             }
@@ -67,6 +73,11 @@ def test_json_multiple_conditions():
             "by_extension": False
         }
     }
+
+    output = __main__.main(args)
+    # output.pop('timestamp')
+    assert output == goal
+
 
 
 class TestHistorical:
