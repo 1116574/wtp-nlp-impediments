@@ -105,6 +105,13 @@ def generate_json(parsed, timestamp=False):
     if timestamp:
         template["timestamp"] = timestamp
 
+    # Check for duplicate conditions. This is a dirty fix to an underlying problem TODO: Fix properly
+    if len(template["conditions"]) > 1:
+        for n, cond in enumerate(template["conditions"]):
+            for cond2 in template["conditions"][n+1:]:
+                if cond == cond2:
+                    template["conditions"].pop(n)
+
     return template
 
     # (Loop, ...), (Replacement_Service, ...)
