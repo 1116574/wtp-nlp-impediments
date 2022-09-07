@@ -26,6 +26,7 @@ def get_patterns():
         'loop_1': [Loop, 4, On, 4, 'relation'],
         'loop_ext': [Loop, 4, 'relation_ext'],
         'loop_ext_1': [Loop, 4, On, 4, 'relation_ext'],
+        'loop_double_but_fuck_you': [Loop, 4, 'relation', 6, And, 6, 'relation'],
         'loop_double': [Loop_Double, 4, 'relation', 6, And, 6, 'relation'],
         'loop_double_1': [Loop_Double, 4, On, 4, 'relation', 6, And, 6, 'relation'],
         'loop_double_2': [Run, 4, On, 4, 'relation', 6, And, 6, 'relation'],
@@ -37,14 +38,15 @@ def get_patterns():
         'shortened_service': [Shortened_Service, 6, On, 6, 'relation'],
         'shortened_service_1': [Shortened_Service, 8, 'relation'],
         'shortened_service_2': ['relation', 8, Shortened_Service],
-        'partly_down': [Not_Functioning_Service, 12, 'relation'],
+        'partly_down': [Not_Functioning_Service, 32, 'relation'],
+        'partly_down_1': [Not_Functioning_Service, 16, Run, 16, 'relation'],
         'facility_offline': [Not_Functioning_Facility, 32, Metro_Line, 8, Station],
         'facility_offline_1': [Not_Functioning_Facility, 24, Station],
         'facility_offline_2': [Station, 24, Not_Functioning_Facility],
         'facility_offline_3': [Not_Functioning_Facility, 8, On_Station, 8, Station],
-        'service_on': [Metro_Line, 12, On, 6, 'relation', 2, Full_Stop],  # Too generic, but with full stop maybe salvagable? Test #35 fails if we disable outright.
-        'service_on_double': [Metro_Line, 12, On, 6, 'relation', 6, And, 6, 'relation', 2, Full_Stop],
-        'service_on_reason': [Metro_Line, 12, On, 6, 'relation', 6, Reason, 6, Full_Stop],
+        'service_on': [16, Metro_Line, 12, On, 6, 'relation', 2, Full_Stop],  # Too generic, but with full stop maybe salvagable? Test #35 fails if we disable outright.
+        'service_on_double': [16, Metro_Line, 12, On, 6, 'relation', 6, And, 6, 'relation', 2, Full_Stop],
+        'service_on_reason': [16, Metro_Line, 12, On, 6, 'relation', 6, Reason, 6, Full_Stop],  # the 16 in the beginning ensures only simple sentences make it, and it isnt out of context (like: service not <running on ...> where <> is patternd)
         'service_on_reason_double': [Metro_Line, 12, On, 6, 'relation', 6, And, 6, 'relation', 6, Reason, 6, Full_Stop],
         'station_closed': [Not_Functioning_Station, 16, Station],
         'skipping': [Loop, 4, 'relation', 8, Skipping, 12, Station],

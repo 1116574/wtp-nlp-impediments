@@ -1,14 +1,31 @@
 from .metro_stations import Station, M1, M2
+from .metro_stations import A14, C11
 
 
 def _service_between(start: Station, end: Station, sort=True) -> list[Station]:
-    if start in M1:
+    print(start, end)
+    if start in M1 and end in M1:
         metro = M1
-    elif start in M2:
+    elif start in M2 and end in M2:
         metro = M2
+    elif start in M1 and end in M2 and start.id == 'A23':  # (start) Świętokrzyska on M1 but should be on M2
+        metro = M2
+        start = C11
+    elif start in M2 and end in M1 and start.id == 'C11':  # (start) Świętokrzyska on M2 but should be on M1
+        print('situation #2')
+        metro = M1
+        start = A14
+    elif start in M1 and end in M2 and end.id == 'A23':  # (end) Świętokrzyska on M1 but should be on M2
+        metro = M2
+        end = C11
+    elif start in M2 and end in M1 and end.id == 'C11':  # (end) Świętokrzyska on M2 but should be on M1
+        metro = M1
+        end = A14
 
     start_index = metro.index(start)
     end_index = metro.index(end)
+
+    print(start_index, end_index)
 
     loop = metro[start_index:end_index+1]
     if loop == []:
@@ -102,7 +119,7 @@ def shortened_service(pattern):
 
 def loop_double(pattern):
     # [Loop_Double, 4, 'relation', 6, And, 6, 'relation']
-    # print(pattern)
+    print('sfgsfg', pattern[10], pattern[14])
     return Double_Loop, _service_between(pattern[2], pattern[6]), _service_between(pattern[10], pattern[14])
 
 
@@ -113,8 +130,13 @@ def loop_double_1(pattern):
 def loop_double_2(pattern):
     return loop_double_1(pattern)
 
+
+def loop_double_but_fuck_you(pattern):
+    return loop_double(pattern)
+
+
 def partly_down(pattern):
-    # [Not_Functioning_Service, 12, 'relation']
+    # [Not_Functioning_Service, 32, 'relation']
     excluded = _service_between(pattern[2], pattern[6])
     if pattern[2] in M1:
         metro = M1
@@ -123,6 +145,9 @@ def partly_down(pattern):
     service = [station for station in metro if station not in excluded]
     return Double_Loop, service
 
+
+def partly_down_1(pattern):
+    return partly_down(['dummy', 'dummy', pattern[4], 'dummy', 'dummy', 'dummy', pattern[8]])
 
 def shortened_service(pattern):
     return Loop, _service_between(pattern[4], pattern[8])
@@ -153,18 +178,18 @@ def facility_offline_3(pattern):
 
 
 def service_on(pattern):
-    return Loop, _service_between(pattern[4], pattern[8])
+    return Loop, _service_between(pattern[5], pattern[9])
 
 
 def service_on_double(pattern):
-    return Double_Loop, _service_between(pattern[4], pattern[8]), _service_between(pattern[12], pattern[16])
+    return Double_Loop, _service_between(pattern[5], pattern[9]), _service_between(pattern[13], pattern[17])
 
 
 def service_on_reason(pattern):
-    return Loop, _service_between(pattern[4], pattern[8])
+    return Loop, _service_between(pattern[5], pattern[9])
 
 def service_on_reason_double(pattern):
-    return Double_Loop, _service_between(pattern[4], pattern[8]), _service_between(pattern[12], pattern[16])
+    return Double_Loop, _service_between(pattern[5], pattern[9]), _service_between(pattern[13], pattern[17])
 
 def station_closed(pattern):
     return Degraded, pattern[2]

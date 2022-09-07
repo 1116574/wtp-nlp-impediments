@@ -174,6 +174,10 @@ TOKEN_M1 = Metro_Line(' M1')  # leading space to avoid matching ZM1 (the replace
 TOKEN_M2 = Metro_Line(' M2')
 
 TOKENS = [
+    On,
+    Run,
+    On_Station,
+
     Between,
     Replacement_Service,
     Not_Functioning_Service,  # as in, trains dont run
@@ -189,19 +193,18 @@ TOKENS = [
     # Metro_Replacement_Names,
     # Full_Stop,
     # Not,
-    On,
-    Run,
     Recommended_Detour,
     TOKEN_M1,
     TOKEN_M2,
     Reason('awari'),
     Reason('zdarzenia'),
     Reason('pozostawionego bagażu'),
+    Reason('zostawionego bagażu'),
     Reason('pozostawienia bagażu'),
+    Reason('zostawienia bagażu'),
     Reason('pozostawionej bomby'),
     Reason('ataku terrorystycznego'),
     Reason('technicznych'),
-    On_Station,
     Delays,
     Metro_Replacement_Names('"ZA METRO"'),
     Metro_Replacement_Names('ZA METRO'),
