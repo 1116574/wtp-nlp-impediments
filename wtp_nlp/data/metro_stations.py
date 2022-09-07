@@ -33,7 +33,7 @@ class Station:
     __match_args__ = ('id', 'name', 'forms', 'turn_around')
 
     def __repr__(self):
-        return f'< {self.name} >'
+        return f'< {self.id}/{self.name} >'
 
     def __iter__(self):
         return (['Metro ' + self.name, self.name] + self.forms).__iter__()

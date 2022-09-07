@@ -46,6 +46,8 @@ def main(args = None):
     parser.add_argument("-o", "--out", help="choose output format: gtfs or json (default: json)", default='json')
     parser.add_argument("-of", "--out_file", help="filename for output", default=False)
     parser.add_argument("-ot", "--out_timestamp", help="timestamp the output", default=True)
+
+    parser.add_argument("-i", "--include", help="include input text in output; works in json", default=False, action='store_true')
     
     parser.add_argument("-dt", "--debug_tokenizer", help="run only tokenizer then quit", default=False, action='store_true')
     parser.add_argument("-dp", "--debug_pattern", help="run only tokenizer and pattern matcher then quit", default=False, action='store_true')
@@ -120,6 +122,9 @@ def main(args = None):
         logging.info('json:')
         # print(filtered)
         output = wtp_nlp.utils.output.generate_json(filtered, timestamp=timestamp)
+        # 4.5. Append input text to output?
+        if args.include:
+            output['input'] = data
     elif args.out == 'gtfs':
         logging.info('gtfs:')
         output = wtp_nlp.utils.output.generate_gtfs(filtered)
