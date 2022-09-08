@@ -1,7 +1,7 @@
 from multiprocessing import current_process
 import wtp_nlp
 from wtp_nlp.data.metro_stations import Station
-from wtp_nlp.data.status import Disabled, Ok, Degraded, Loop, Double_Loop, Facilities, Replacement_Service, Reason
+from wtp_nlp.data.status import Disabled, Ok, Degraded, Degraded_Segment, Degraded_Line, Loop, Double_Loop, Facilities, Replacement_Service, Reason
 
 import logging, copy
 
@@ -14,7 +14,19 @@ def _infere_line(station: Station) -> Metro_Line:
         return TOKEN_M1
     if station in M2:
         return TOKEN_M2
-        
+
+
+def _create_segment(segment: list[Station]) -> list:
+    output = []
+    for station in segment:
+        output.append({
+            "name": station.name,
+            "id": station.id,
+            "gtfs_id": station.gtfs_id
+        })
+
+    return output
+
 
 def generate_gtfs():
     pass
@@ -55,13 +67,7 @@ def generate_json(parsed, timestamp=False):
 
             current_condition["status"] = 'Loop'
             current_condition["line"] = str(_infere_line(data[0][0]))
-            affected = []
-            for station in data[0]:
-                affected.append({
-                    "name": station.name,
-                    "id": station.id,
-                    "gtfs_id": station.gtfs_id
-                })
+            affected = _create_segment(data[0])
             current_condition["affected"] = affected
             template["conditions"].append(current_condition)
 
@@ -74,13 +80,8 @@ def generate_json(parsed, timestamp=False):
                 current_condition["affected"] = []
                 current_condition["line"] = str(_infere_line(leg[0]))
 
-                affected = []
-                for station in leg:
-                    affected.append({
-                        "name": station.name,
-                        "id": station.id,
-                        "gtfs_id": station.gtfs_id
-                    })
+                affected = _create_segment(leg)
+
                 current_condition["affected"] = affected
                 template["conditions"].append(current_condition)
     
@@ -106,13 +107,27 @@ def generate_json(parsed, timestamp=False):
             current_condition["affected"] = [str(entry) for entry in data]
             template["conditions"].append(current_condition)
 
-        elif status is Degraded:
+        elif status is Degraded_Segment:
+            logger.debug(f'json:degraded_segment: {data}')
+            current_condition = copy.copy(condition)
+            current_condition["status"] = 'Degraded_Segment'
+            current_condition["affected"] = _create_segment(data[0])
+            current_condition["line"] = str(_infere_line(data[0][0]))
+            template["conditions"].append(current_condition)
+
+        elif status is Degraded_Line:
             logger.debug(f'json:degraded: {data}')
             current_condition = copy.copy(condition)
-            current_condition["status"] = 'Degraded'
+            current_condition["status"] = 'Degraded_Line'
             current_condition["affected"] = [str(entry) for entry in data]
+            
+            if len(data) == 1:
+                current_condition["line"] = str(data[0])
+            else:
+                current_condition["line"] = 'multiple'
+
             template["conditions"].append(current_condition)
-        
+
         elif status is Disabled:
             current_condition["status"] = 'Disabled'
             current_condition["affected"] = data

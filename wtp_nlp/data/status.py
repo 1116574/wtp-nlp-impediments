@@ -45,6 +45,12 @@ class Ok(Status):
 class Degraded(Status):
     pass
 
+class Degraded_Segment(Status):
+    pass
+
+class Degraded_Line(Status):
+    pass
+
 class Disabled(Status):
     pass
 
@@ -89,25 +95,25 @@ def loop_ext_1(pattern):
 def reduced_service(pattern):
     start = pattern[6]
     end = pattern[10]
-    return Degraded, _service_between(start, end)
+    return Degraded_Segment, _service_between(start, end)
 
 
 def reduced_service_1(pattern):
     start = pattern[4]
     end = pattern[8]
-    return Degraded, _service_between(start, end)    
+    return Degraded_Segment, _service_between(start, end)    
 
 
 def reduced_service_2(pattern):
-    return Degraded, pattern[2]
+    return Degraded_Line, pattern[2]
 
 
 def reduced_service_3(pattern):
-    return Degraded, pattern[0]
+    return Degraded_Line, pattern[0]
 
 
 def reduced_service_4(pattern):
-    return Degraded, pattern[2], pattern[6]
+    return Degraded_Line, pattern[2], pattern[6]
 
 
 def shortened_service(pattern):
