@@ -30,7 +30,7 @@ def get_patterns():
         'loop_double': [Loop_Double, 4, 'relation', 6, And, 6, 'relation'],
         'loop_double_1': [Loop_Double, 4, On, 4, 'relation', 6, And, 6, 'relation'],
         'loop_double_2': [Run, 4, On, 4, 'relation', 6, And, 6, 'relation'],
-        'reduced_service': [Metro_Line, 10, Reduced_Service, 10, On, 10, 'relation'],
+        'reduced_service': [Metro_Line, 16, Reduced_Service, 10, On, 10, 'relation'],
         'reduced_service_1': [Metro_Line, 10, On, 10, 'relation', 16, Reduced_Service],
         'reduced_service_2': [Reduced_Service, 32, Metro_Line],
         'reduced_service_3': [Metro_Line, 32, Reduced_Service],
