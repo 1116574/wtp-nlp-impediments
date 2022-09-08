@@ -1,5 +1,9 @@
 import html, json, re
 
+# For debuging
+# import sys
+# sys.path.append('.')
+
 from rich.console import Console
 
 from wtp_nlp.data.metro_stations import M1, M2
@@ -85,14 +89,19 @@ def tokenizer(text: list) -> list:
             for index in results:
                 semantic[index] = word
 
+                # if str(word) == "<class 'wtp_nlp.data.tokens.Shortened_Service'>":
+                #     print(index, name)
+
                 # replace additional letters
                 for g in range(1, len(name)):
                     semantic[index+g] = Dummy
+                # if str(word) == "<class 'wtp_nlp.data.tokens.Shortened_Service'>":
+                #     print(semantic)
 
     return _distance_reduce(semantic)
 
 if __name__ == '__main__':
-    reduced = tokenizer('Z przyczyn technicznych w rejonie stacji Dworzec Gdański > Kabaty występują utrudnienia w kursowaniu linii M1. Możliwe opóźnienia na linii ok 10-12 min.')
+    reduced = tokenizer('Pociągi linii metra  M1  kursują na trasie skróconej')
     # print(semantic)
     print('======')
     # print([x for x in semantic if x is not None])

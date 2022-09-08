@@ -30,8 +30,8 @@ def maker(broken_html):
 def save(args, output):
     # 5. Save (optional)
     if args.out_file:
-        with open(args.out_file, 'w') as f:
-            json.dump(output, f, indent=4)
+        with open(args.out_file, 'w', encoding='utf-8') as f:
+            json.dump(output, f, indent=4, ensure_ascii=False)
 
 
 def main(args = None):
