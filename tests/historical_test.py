@@ -88,6 +88,6 @@ class TestHistorical:
     def test_3_degrade(self):
         result = language_processor(self.get_history(3))
         assert result[-4]['processed_to'][0] == status.Loop
-        assert result[-3]['processed_to'] == (status.Degraded, TOKEN_M2)
+        assert result[-3]['processed_to'] == (status.Degraded_Line, TOKEN_M2)
 
 # TestHistorical.test_17()
