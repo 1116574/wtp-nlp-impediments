@@ -1,8 +1,20 @@
 from multiprocessing import current_process
 import wtp_nlp
+from wtp_nlp.data.metro_stations import Station
 from wtp_nlp.data.status import Disabled, Ok, Degraded, Loop, Double_Loop, Facilities, Replacement_Service, Reason
 
 import logging, copy
+
+from wtp_nlp.data.tokens import Metro_Line, TOKEN_M1, TOKEN_M2
+from wtp_nlp.data.metro_stations import M1, M2
+
+
+def _infere_line(station: Station) -> Metro_Line:
+    if station in M1:
+        return TOKEN_M1
+    if station in M2:
+        return TOKEN_M2
+        
 
 def generate_gtfs():
     pass
@@ -18,6 +30,7 @@ def generate_json(parsed, timestamp=False):
 
     condition = {
         "status": None,
+        "line": None,
         "affected": None,
     }
 
@@ -41,6 +54,7 @@ def generate_json(parsed, timestamp=False):
         if status is Loop:
 
             current_condition["status"] = 'Loop'
+            current_condition["line"] = str(_infere_line(data[0][0]))
             affected = []
             for station in data[0]:
                 affected.append({
@@ -53,11 +67,13 @@ def generate_json(parsed, timestamp=False):
 
 
         elif status is Double_Loop:
-            current_condition = copy.copy(condition)
-
-            current_condition["status"] = 'Double_Loop'
-            current_condition["affected"] = []
             for leg in data:
+                current_condition = copy.copy(condition)
+
+                current_condition["status"] = 'Loop'
+                current_condition["affected"] = []
+                current_condition["line"] = str(_infere_line(leg[0]))
+
                 affected = []
                 for station in leg:
                     affected.append({
@@ -65,8 +81,8 @@ def generate_json(parsed, timestamp=False):
                         "id": station.id,
                         "gtfs_id": station.gtfs_id
                     })
-                current_condition["affected"].append(affected)
-            template["conditions"].append(current_condition)
+                current_condition["affected"] = affected
+                template["conditions"].append(current_condition)
     
 
         elif status is Reason:
