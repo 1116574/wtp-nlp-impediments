@@ -1,4 +1,5 @@
 import html, json, re
+import logging
 
 # For debuging
 # import sys
@@ -39,10 +40,13 @@ def _distance_reduce(array: list):
 
 def _abbrv(text: str) -> str:
     """ Replaces shorthands and periods with full word without periods """
-    return text.replace(' pl. ', ' plac ').replace(' al. ', ' aleja ').replace(' os. ', ' osiedle ').replace('godz.', 'godziny')
+    return text.replace(' pl. ', ' plac ').replace(' al. ', ' aleja ').replace(' os. ', ' osiedle ').replace('godz.', 'godziny ').replace('dw.', 'Dworzec ').replace('Dw.', 'Dworzec ')
 
 
 def tokenizer(text: list) -> list:
+    # TODO: Possibly maybe first detect stations, then the rest?
+    logger = logging.getLogger()
+    text = _abbrv(text)  # convert shorthands into full words, so `.` doesnt get mixed up when splitting sentences
     semantic = [None] * len(text)
 
     # New line characters, important - run before .split()
@@ -55,9 +59,12 @@ def tokenizer(text: list) -> list:
     text = " ".join(text.split())
 
     # Detect sentences
-    text = _abbrv(text)  # convert shorthands into full words, so `.` doesnt get mixed up
     results = _find_all(text, '.')
+
+    logger.debug('tokenizer:' + text)
+    logger.debug('tokenizer:' + str(len(semantic)))
     for index in results:
+        logger.debug(f'sentences:{index}:{len(semantic)}')
         semantic[index] = Full_Stop
 
     # Detect 'and' ('i')
@@ -76,6 +83,7 @@ def tokenizer(text: list) -> list:
             for name in station:
                 results = _find_all(text.lower(), name.lower())
                 for index in results:
+                    logger.debug(f'metro_replacer:replacing at {index} with {station}')
                     semantic[index] = station
 
                     # replace additional letters
