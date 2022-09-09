@@ -128,6 +128,13 @@ def generate_json(parsed, timestamp=False):
 
             template["conditions"].append(current_condition)
 
+        elif status is Degraded:  # TODO FIXME Legacy code for closed stations
+            logger.debug(f'json:degraded: {data}')
+            current_condition = copy.copy(condition)
+            current_condition["status"] = 'Degraded'
+            current_condition["affected"] = [str(entry) for entry in data]
+            template["conditions"].append(current_condition)
+
         elif status is Disabled:
             current_condition["status"] = 'Disabled'
             current_condition["affected"] = data
