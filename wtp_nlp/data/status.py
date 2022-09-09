@@ -146,8 +146,18 @@ def partly_down(pattern):  ## AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         metro = M1
     elif pattern[2] in M2:
         metro = M2
-    service = [station for station in metro if station not in excluded]
-    return Double_Loop, service, service[1:]  # TODO FIXME this should return 2 different loops.
+    # service = [station for station in metro if station not in excluded]
+    out1 = []
+    out2 = []
+    current = out1
+    for station in metro:
+        if station not in excluded:
+            current.append(station)
+        else:
+            current = out2
+            continue
+
+    return Double_Loop, out1, out2
 
 
 def partly_down_1(pattern):
