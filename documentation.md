@@ -4,26 +4,43 @@
 {
     "conditions": [
         {
-            "status": "Degraded",
-            "affected": "depends on status"
-        },
-        {
-            "status": "Loop",
+            "status": "Degraded_Line",
+            "line": "M1",
             "affected": [
                 {
                     "id": "A9",
-                    "name": "Station name"
+                    "name": "Station name",
+                    "gtfs_id": "9999m"
                 },
                 {
                     "id": "A8",
-                    "name": "Station name"
+                    "name": "Station name",
+                    "gtfs_id": "9999m"
+                }, ...and more
+            ]
+        },
+        {
+            "status": "Loop",
+            "line": "M1",
+            "affected": [
+                {
+                    "id": "A9",
+                    "name": "Station name",
+                    "gtfs_id": "9999m"
+                },
+                {
+                    "id": "A8",
+                    "name": "Station name",
+                    "gtfs_id": "9999m"
                 },
                 {
                     "id": "A7",
-                    "name": "Station name"
+                    "name": "Station name",
+                    "gtfs_id": "9999m"
                 }
             ]
-        }
+        }, 
+        ...there is no limit to amount of conditions, but Loops are usually most important so I suggest implementing them first
     ],
     "reason": null|string,
     "replacement_service": {
@@ -40,32 +57,80 @@ An Array of multible ongoing conditions, although usually one. A condition is, f
 
 
 ## Allowed conditions
+
+--------
 ### `Loop`
 Service operates in a loop, like when last 3 stations are offline.
 
-`affected` will be a list of currently operating stations eg. `[A, B, C]`
+`affected` will be a list of currently operating stations eg. `[A, B, C]`.
 
-note: order is guaranteed, so `[A, C, B]` is impossible, but the direction of ordering isn't. `[C, B, A]` is valid.  # todo: check this behaviour
+`line` will be the line of the first station, either `M1` or `M2`.
 
-### `Double_Loop`
-2 distinct loops, when center section is offline - services are split into northern and southern loops.
+note: order is guaranteed, so `[A, C, B]` is impossible, but the direction of ordering isn't. `[C, B, A]` is valid.  # todo: check this behaviour.
 
-`affected` will be a 2 len list of currently loops. eg. `[ [A, B, C], [F, G, H] ]`
+--------
 
 ### `Facilities`
 Some facilities such as elevators or exits dont work.
 
-`affected` will be station object that is experiencing difficultuies
+`affected` will be station object that is experiencing difficultuies.
+
+No `line` is provided for this status.
+
+--------
+
+### `Degraded_Segment`
+There are (possibly undefinied) delays between stations, there are less trains than usual (reduced frequency), trains stop for longer then normal, or an otherwise condition that degrades the service, **but doesnt stop it completely**
+
+`affected` will be a list of stops that service is degraded on.
+
+`line` will be the line of the first station, either `M1` or `M2`.
+
+--------
+### `Degraded_Line`
+A line (as a whole) is experiencing some difficulties.
+
+`affected` will be a list of strings denoting the metro line (M1 or M2) that is experiencing difficulties.
+
+`line` will be either `M1`, `M2` or `multiple` if there are multiple lines having trouble, eg.
+```json
+{
+    "status": "Degraded_Line",
+    "line": "multiple",
+    "affected": ["M1", "M2"]
+}
+```
+or
+```json
+{
+    "status": "Degraded_Line",
+    "line": "M1",
+    "affected": ["M1"]
+}
+```
+
+--------
+
+### `Disabled`
+Whole network is down, or more probably a bug arose. Since this is so infrequent its hard to test for. I suggest to ignore this if any other condition is available, like `Loop` or one of `Degraded_*` variants.
+
+--------
 
 ### `Degraded`
-There are (possibly undefinied) delays on the network or between stations, there are less trains than usual, eg. reduced frequency, or an otherwise condition that degrades the service, **but doesnt stop it completely**
+Legacy status, right now used for closed station. To be changed in future.
 
-`affected` will be either a list of stops that service is degraded on or a string denoting the metro line (M1 or M2) that is experiencing difficulties.
+`affected` is the closed station object
+
+No `line` is provided.
+
+--------
+
 
 ## Metro station object
 ```json
 {
     "id": "A12",
-    "name": "Wilanowska"
+    "name": "Wilanowska",
+    "gtfs_id": "3009m"
 }
 ```
