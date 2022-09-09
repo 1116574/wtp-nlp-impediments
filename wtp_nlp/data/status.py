@@ -19,6 +19,8 @@ def _service_between(start: Station, end: Station, sort=True) -> list[Station]:
     elif start in M2 and end in M1 and end.id == 'C11':  # (end) Świętokrzyska on M2 but should be on M1
         metro = M1
         end = A14
+    else:
+        raise ValueError(f'Cant establish metro line of: {start}, {end}')
 
     start_index = metro.index(start)
     end_index = metro.index(end)
@@ -137,7 +139,7 @@ def loop_double_but_fuck_you(pattern):
     return loop_double(pattern)
 
 
-def partly_down(pattern):
+def partly_down(pattern):  ## AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     # [Not_Functioning_Service, 32, 'relation']
     excluded = _service_between(pattern[2], pattern[6])
     if pattern[2] in M1:
@@ -145,11 +147,24 @@ def partly_down(pattern):
     elif pattern[2] in M2:
         metro = M2
     service = [station for station in metro if station not in excluded]
-    return Double_Loop, service
+    return Double_Loop, service, service[1:]  # TODO FIXME this should return 2 different loops.
 
 
 def partly_down_1(pattern):
     return partly_down(['dummy', 'dummy', pattern[4], 'dummy', 'dummy', 'dummy', pattern[8]])
+
+
+def partly_down_2(pattern):
+    return partly_down(['dummy', 'dummy', pattern[6], 'dummy', 'dummy', 'dummy', pattern[10]])
+
+
+def partly_down_3(pattern):
+    return Degraded_Line, pattern[2]
+
+
+def partly_down_4(pattern):
+    return partly_down(['dummy', 'dummy', pattern[4], 'dummy', 'dummy', 'dummy', pattern[8]])
+
 
 def shortened_service(pattern):
     return Loop, _service_between(pattern[4], pattern[8])
