@@ -74,6 +74,9 @@ def generate_json(parsed, timestamp=False):
 
         elif status is Double_Loop:
             for leg in data:
+                if leg == []:
+                    continue
+                    # This is masking an underlying problem. FIXME (low priority)
                 current_condition = copy.copy(condition)
 
                 current_condition["status"] = 'Loop'
