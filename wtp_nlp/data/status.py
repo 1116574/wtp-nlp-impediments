@@ -139,6 +139,9 @@ def loop_double_but_fuck_you(pattern):
     return loop_double(pattern)
 
 
+def loop_run(pattern):
+    return Loop, _service_between(pattern[6], pattern[10])
+
 def partly_down(pattern):  ## AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     # [Not_Functioning_Service, 32, 'relation']
     excluded = _service_between(pattern[2], pattern[6])

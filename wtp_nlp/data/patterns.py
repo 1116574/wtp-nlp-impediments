@@ -24,6 +24,7 @@ def get_patterns():
         'reason': [Reason, 10, On_Station, 10, Station],
         'loop': [Loop, 4, 'relation'],  # TODO: [Loop, 4, 'relation', Optional(8), Not(Skipping)]
         'loop_1': [Loop, 4, On, 4, 'relation'],
+        'loop_run': [Metro_Line, 4, Run, 4, On, 4, 'relation'],
         'loop_ext': [Loop, 4, 'relation_ext'],
         'loop_ext_1': [Loop, 4, On, 4, 'relation_ext'],
         'loop_double_but_fuck_you': [Loop, 4, 'relation', 6, And, 6, 'relation'],
