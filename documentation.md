@@ -116,12 +116,12 @@ Whole network is down, or more probably a bug arose. Since this is so infrequent
 
 --------
 
-### `Degraded`
-Legacy status, right now used for closed station. To be changed in future.
+### `Station_Closed`
+Used for closed station. In future it might return multiple stations in a list
 
-`affected` is the closed station object
+`affected` is the closed station object.
 
-No `line` is provided.
+`line` is inferred from station.
 
 --------
 

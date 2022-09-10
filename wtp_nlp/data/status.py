@@ -45,7 +45,10 @@ class Status:
 class Ok(Status):
     pass
 
-class Degraded(Status):
+# class Degraded(Status):
+#     pass
+
+class Station_Closed(Status):
     pass
 
 class Degraded_Segment(Status):
@@ -227,7 +230,7 @@ def service_on_reason_double(pattern):
     return Double_Loop, _service_between(pattern[5], pattern[9]), _service_between(pattern[13], pattern[17])
 
 def station_closed(pattern):
-    return Degraded, pattern[2]
+    return Station_Closed, pattern[2]
 
 def skipping(pattern):
     pass  # TODO: Implement.

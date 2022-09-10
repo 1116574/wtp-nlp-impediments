@@ -1,7 +1,7 @@
 from multiprocessing import current_process
 import wtp_nlp
 from wtp_nlp.data.metro_stations import Station
-from wtp_nlp.data.status import Disabled, Ok, Degraded, Degraded_Segment, Degraded_Line, Loop, Double_Loop, Facilities, Replacement_Service, Reason
+from wtp_nlp.data.status import Disabled, Ok, Station_Closed, Degraded_Segment, Degraded_Line, Loop, Double_Loop, Facilities, Replacement_Service, Reason
 
 import logging, copy
 
@@ -16,19 +16,35 @@ def _infere_line(station: Station) -> Metro_Line:
         return TOKEN_M2
 
 
-def _create_segment(segment: list[Station]) -> list:
-    output = []
-    for station in segment:
-        output.append({
+def _make_station(station: Station) -> dict:
+    return {
             "name": station.name,
             "id": station.id,
             "gtfs_id": station.gtfs_id
-        })
+        }
+
+
+def _create_segment(segment: list[Station]) -> list:
+    output = []
+    for station in segment:
+        output.append(_make_station(station))
 
     return output
 
 
 def generate_gtfs():
+    pass
+
+
+def generate_text(parsed, timestamp=False):
+    logger = logging.getLogger('output')
+    logger.debug(f'text:recieved: {parsed}')
+
+    for entry in parsed:
+        print(entry)
+
+
+def generate_image():  # mayby?
     pass
 
 
@@ -107,7 +123,7 @@ def generate_json(parsed, timestamp=False):
             logger.debug(f'json:facilities: {data}')
             current_condition = copy.copy(condition)
             current_condition["status"] = 'Facilities'
-            current_condition["affected"] = [str(entry) for entry in data]  # This is usually one station, but for extensibility sake lets keep it compatible for more
+            current_condition["affected"] = [_create_segment(entry) for entry in data]  # This is usually one station, but for extensibility sake lets keep it compatible for more
             current_condition["line"] = str(_infere_line(data[0]))  # And now lets forget the above comment and pretend its always just one station
             template["conditions"].append(current_condition)
 
@@ -132,11 +148,13 @@ def generate_json(parsed, timestamp=False):
 
             template["conditions"].append(current_condition)
 
-        elif status is Degraded:  # TODO FIXME Legacy code for closed stations
-            logger.debug(f'json:degraded: {data}')
+        elif status is Station_Closed:
+            logger.debug(f'json:station_closed: {data}')
+            station = data[0]  # Assume only one, which is *probably* a bad practice FIXME?
             current_condition = copy.copy(condition)
-            current_condition["status"] = 'Degraded'
-            current_condition["affected"] = [str(entry) for entry in data]
+            current_condition["status"] = 'Station_Closed'
+            current_condition["affected"] = _make_station(station)
+            current_condition["line"] = str(_infere_line(station))
             template["conditions"].append(current_condition)
 
         elif status is Disabled:
