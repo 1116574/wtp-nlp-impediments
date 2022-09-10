@@ -107,7 +107,8 @@ def generate_json(parsed, timestamp=False):
             logger.debug(f'json:facilities: {data}')
             current_condition = copy.copy(condition)
             current_condition["status"] = 'Facilities'
-            current_condition["affected"] = [str(entry) for entry in data]
+            current_condition["affected"] = [str(entry) for entry in data]  # This is usually one station, but for extensibility sake lets keep it compatible for more
+            current_condition["line"] = str(_infere_line(data[0]))  # And now lets forget the above comment and pretend its always just one station
             template["conditions"].append(current_condition)
 
         elif status is Degraded_Segment:
