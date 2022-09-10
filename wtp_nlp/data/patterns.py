@@ -36,6 +36,7 @@ def get_patterns():
         'reduced_service_2': [Reduced_Service, 32, Metro_Line],
         'reduced_service_3': [Metro_Line, 32, Reduced_Service],
         'reduced_service_4': [Reduced_Service, 32, Metro_Line, 4, And, 4, Metro_Line],
+        'reduced_service_5': [On, 4, 'relation', 4, Run, 8, Reduced_Service, 4, Full_Stop],  # TODO: Test this pattern more properly, it seems greedy atm, but it might be masked by it being one of the last patterns
         'shortened_service': [Shortened_Service, 6, On, 6, 'relation'],
         'shortened_service_1': [Shortened_Service, 8, 'relation'],
         'shortened_service_2': ['relation', 8, Shortened_Service],
