@@ -1,3 +1,4 @@
+from wtp_nlp.data.tokens import TOKEN_M1, TOKEN_M2
 from .metro_stations import Station, M1, M2
 from .metro_stations import A14, C11
 
@@ -118,6 +119,10 @@ def reduced_service_4(pattern):
     return Degraded_Line, pattern[2], pattern[6]
 
 
+def reduced_service_5(pattern):
+    return Degraded_Segment, _service_between(pattern[2], pattern[6])
+
+
 def shortened_service(pattern):
     return Loop, _service_between(pattern[4], pattern[8])
 
@@ -229,7 +234,7 @@ def skipping(pattern):
     return Double_Loop, _service_between(pattern[2], pattern[10]), _service_between(pattern[6], pattern[10])
 
 def all_down(pattern):
-    return Disabled, ['M1', 'M2']
+    return Disabled, TOKEN_M1, TOKEN_M2
 
 def reason(pattern):
     return Reason, pattern[0]
