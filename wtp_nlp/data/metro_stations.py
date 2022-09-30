@@ -97,6 +97,9 @@ C15 = Station('C15', 'Dworzec Wileński', ['Dw. Wileński', 'Wileński', 'Dw.Wil
 C16 = Station('C16', 'Szwedzka', ['Szwedzkiej'], '1526m')
 C17 = Station('C17', 'Targówek Mieszkaniowy', ['Targówek', 'Targówka'], '1137m', True)
 C18 = Station('C18', 'Trocka', ['Trockiej'], '1140m', True)
+C19 = Station('C19', 'Zacisze', ['Zacisza', 'Zaciszu'], '1411m', False)  # TODO: Add correct info about ability to turnaround on those stations
+C20 = Station('C20', 'Kondratowicza', [], '1146m', False)
+C21 = Station('C21', 'Bródno', ['Bródnie'], '1085m', False)
 
 M1 = [
     A1,
@@ -138,4 +141,7 @@ M2 = [
     C16,
     C17,
     C18,
+    C19,
+    C20,
+    C21,
 ]
