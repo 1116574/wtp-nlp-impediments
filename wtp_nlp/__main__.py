@@ -43,7 +43,7 @@ def main(args = None):
     input_src.add_argument("-ht", "--html", help="Pass alert text in html as an argument, skipping RSS")
     input_src.add_argument("-f", "--file", help="Pass alert text in a file, skipping RSS")
 
-    parser.add_argument("-o", "--out", help="choose output format: gtfs or json (default: json)", default='json')
+    parser.add_argument("-o", "--out", help="choose output format: text, gtfs or json (default: json)", default='json')
     parser.add_argument("-of", "--out_file", help="filename for output", default=False)
     parser.add_argument("-ot", "--out_timestamp", help="timestamp the output", default=True)
 
@@ -128,6 +128,8 @@ def main(args = None):
     elif args.out == 'gtfs':
         logging.info('gtfs:')
         output = wtp_nlp.utils.output.generate_gtfs(filtered)
+    elif args.out == 'text':
+        output = wtp_nlp.utils.output.generate_text(filtered, timestamp=timestamp)
 
     save(args, output)
     

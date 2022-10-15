@@ -160,6 +160,7 @@ def generate_json(parsed, timestamp=False):
         elif status is Disabled:
             current_condition["status"] = 'Disabled'
             current_condition["affected"] = [str(entry) for entry in data]
+            current_condition["line"] = str(_infere_line(station))
             template["conditions"].append(current_condition)
 
     if timestamp:
