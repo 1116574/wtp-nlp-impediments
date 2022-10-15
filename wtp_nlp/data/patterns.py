@@ -45,6 +45,7 @@ def get_patterns():
         'partly_down_2': [Not_Functioning_Service, 32, Metro_Line, 16, On, 8, 'relation', 8, Full_Stop],
         'partly_down_3': [Not_Functioning_Service, 32, Metro_Line],
         'partly_down_4': [Not_Functioning_Service, 16, On, 8, 'relation', 8, Full_Stop],
+        'partly_down_5': [Metro_Line, 8, Not_Functioning_Service],
         'facility_offline': [Not_Functioning_Facility, 32, Metro_Line, 8, Station],
         'facility_offline_1': [Not_Functioning_Facility, 24, Station],
         'facility_offline_2': [Station, 24, Not_Functioning_Facility],

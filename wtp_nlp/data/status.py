@@ -187,6 +187,9 @@ def partly_down_4(pattern):
     return partly_down(['dummy', 'dummy', pattern[4], 'dummy', 'dummy', 'dummy', pattern[8]])
 
 
+def partly_down_5(pattern):
+    return Disabled, pattern[0]
+
 def shortened_service(pattern):
     return Loop, _service_between(pattern[4], pattern[8])
 
