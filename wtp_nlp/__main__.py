@@ -69,7 +69,7 @@ def main(args = None):
     elif args.html:
         data = maker(args.html)
     elif args.file:
-        with open(args.file, 'r') as f:
+        with open(args.file, 'r', encoding='utf-8') as f:
             data = f.read()
     elif args.network:
         data = wtp_nlp.utils.get_from_network.get_impidements()
