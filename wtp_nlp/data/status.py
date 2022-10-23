@@ -135,12 +135,26 @@ def loop_double(pattern):
     return Double_Loop, _service_between(pattern[2], pattern[6]), _service_between(pattern[10], pattern[14])
 
 
+def loop_double_ext(pattern):
+    # [Loop_Double, 4, 'relation_ext', 6, And, 6, 'relation_ext']
+    return Double_Loop, _service_between(pattern[2], pattern[6]), _service_between(pattern[14], pattern[18])
+
+
 def loop_double_1(pattern):
     return Double_Loop, _service_between(pattern[4], pattern[8]), _service_between(pattern[12], pattern[16])
 
 
+def loop_double_1_ext(pattern):
+    # 'loop_double_1_ext': [Loop_Double, 4, On, 4, 'relation_ext', 6, And, 6, 'relation_ext']
+    return Double_Loop, _service_between(pattern[4], pattern[8]), _service_between(pattern[16], pattern[20])
+
+
 def loop_double_2(pattern):
     return loop_double_1(pattern)
+
+
+def loop_double_2_ext(pattern):
+    return loop_double_1_ext(pattern)
 
 
 def loop_double_but_fuck_you(pattern):
