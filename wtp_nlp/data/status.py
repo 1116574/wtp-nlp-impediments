@@ -256,9 +256,6 @@ def skipping(pattern):
 def all_down(pattern):
     return Disabled, TOKEN_M1, TOKEN_M2
 
-def reason(pattern):
-    return Reason, pattern[0]
-
 
 def replacement_service(pattern):
     return Replacement_Service, True
@@ -268,3 +265,20 @@ def replacement_service_1(pattern):
 
 def replacement_service_by_extension(pattern):
     return Replacement_Service, 'by_extension'
+
+
+### Reasons
+def reason_luggage(pattern):
+    return Reason, pattern[2]
+
+
+def reason_technical(pattern):
+    return Reason, pattern[2]
+
+
+def reason_terrorism(pattern):
+    return Reason, pattern[2]
+
+
+def reason_incident(pattern):
+    return Reason, pattern[2]

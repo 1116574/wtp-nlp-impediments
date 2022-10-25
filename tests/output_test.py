@@ -19,7 +19,7 @@ class Args:
 
 def test_json():
     args = Args('Z powodu awarii metro kursuje w pętli Słodowiec-Marymont. Uruchomiono linię zastępczą ZM1', 'json')
-    assert __main__.main(args) == {'conditions': [{'status': 'Loop', "line": "M1", 'affected': [{'name': 'Marymont', 'id': 'A19', 'gtfs_id': '6005m'}, {'name': 'Słodowiec', 'id': 'A20', 'gtfs_id': '6006m'}]}], 'reason': 'awari', 'replacement_service': {'exists': True, 'name': 'ZM1', 'by_extension': False}}
+    assert __main__.main(args) == {'conditions': [{'status': 'Loop', "line": "M1", 'affected': [{'name': 'Marymont', 'id': 'A19', 'gtfs_id': '6005m'}, {'name': 'Słodowiec', 'id': 'A20', 'gtfs_id': '6006m'}]}], 'reason': 'technical', 'replacement_service': {'exists': True, 'name': 'ZM1', 'by_extension': False}}
 
 
 def test_json_multiple_conditions():
@@ -69,7 +69,7 @@ def test_json_multiple_conditions():
                 ]
             }
         ],
-        "reason": "awari",
+        "reason": "technical",
         "replacement_service": {
             "exists": True,
             "name": "ZM1",
@@ -177,7 +177,7 @@ class TestHistorical:
             ]
         }
     ],
-    "reason": "zdarzenia",
+    "reason": "incident",
     "replacement_service": {
         "exists": True,
         "name": None,

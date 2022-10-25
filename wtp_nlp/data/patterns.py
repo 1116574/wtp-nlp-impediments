@@ -1,5 +1,6 @@
 from wtp_nlp.data.metro_stations import Station
 from wtp_nlp.data.tokens import *
+from wtp_nlp.data.reasons import *
 
 # format: classes are tokens and stations objects,
 #  between which are numbers representing maxiumm distance.
@@ -65,7 +66,10 @@ def get_patterns():
         'replacement_service': [Replacement_Service],
         'replacement_service_1': [Metro_Replacement_Names],
         'replacement_service_by_extension': [Detour_By_Extension],
-        'reason': [Reason],
+        'reason_luggage': [Reason_is, 4, Orphaned_Luggage],
+        'reason_technical': [Reason_is, 4, Technical],
+        'reason_terrorism': [Reason_is, 4, Terrorist_Attack],
+        'reason_incident': [Reason_is, 4, Incident],
     }
 
     new_patterns = patterns

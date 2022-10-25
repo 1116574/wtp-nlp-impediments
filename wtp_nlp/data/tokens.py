@@ -173,6 +173,8 @@ class Metro_Replacement_Names:
 TOKEN_M1 = Metro_Line(' M1')  # leading space to avoid matching ZM1 (the replacement bus)
 TOKEN_M2 = Metro_Line(' M2')
 
+from .reasons import REASONS
+
 TOKENS = [
     On,
     Run,
@@ -196,15 +198,6 @@ TOKENS = [
     Recommended_Detour,
     TOKEN_M1,
     TOKEN_M2,
-    Reason('awari'),
-    Reason('zdarzenia'),
-    Reason('pozostawionego bagażu'),
-    Reason('zostawionego bagażu'),
-    Reason('pozostawienia bagażu'),
-    Reason('zostawienia bagażu'),
-    Reason('pozostawionej bomby'),
-    Reason('ataku terrorystycznego'),
-    Reason('technicznych'),
     Delays,
     Metro_Replacement_Names('"ZA METRO"'),
     Metro_Replacement_Names('ZA METRO'),
@@ -219,3 +212,5 @@ TOKENS = [
     Whole_Metro,
 
 ]
+
+TOKENS = [*TOKENS, *REASONS]

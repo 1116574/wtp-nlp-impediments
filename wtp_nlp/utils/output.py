@@ -106,7 +106,8 @@ def generate_json(parsed, timestamp=False):
     
 
         elif status is Reason:
-            template["reason"] = str(data[0])
+            logger.debug(f'json:reason: {data[0]}')
+            template["reason"] = data[0].api_name
 
         elif status is Replacement_Service:
             if data[0] == True:
@@ -123,7 +124,8 @@ def generate_json(parsed, timestamp=False):
             logger.debug(f'json:facilities: {data}')
             current_condition = copy.copy(condition)
             current_condition["status"] = 'Facilities'
-            current_condition["affected"] = [_create_segment(entry) for entry in data]  # This is usually one station, but for extensibility sake lets keep it compatible for more
+            # current_condition["affected"] = [_create_segment(entry) for entry in data]  # This is usually one station, but for extensibility sake lets keep it compatible for more
+            current_condition["affected"] = _create_segment(data)  # This is usually one station, but for extensibility sake lets keep it compatible for more
             current_condition["line"] = str(_infere_line(data[0]))  # And now lets forget the above comment and pretend its always just one station
             template["conditions"].append(current_condition)
 
@@ -160,7 +162,7 @@ def generate_json(parsed, timestamp=False):
         elif status is Disabled:
             current_condition["status"] = 'Disabled'
             current_condition["affected"] = [str(entry) for entry in data]
-            current_condition["line"] = str(_infere_line(station))
+            current_condition["line"] =[str(entry) for entry in data]  # Special case - 'disables' will always come with line_token, not station
             template["conditions"].append(current_condition)
 
     if timestamp:
