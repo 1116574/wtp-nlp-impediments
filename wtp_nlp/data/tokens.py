@@ -62,7 +62,7 @@ class Reduced_Service(Token):
 
 @dataclass
 class Shortened_Service(Token):
-    raw = ['kursuje na trasie skróconej', 'kursują na trasie skróconej', 'na trasie skróconej', 'na skróconej trasie']
+    raw = ['kursuje na trasie skróconej', 'kursują na trasie skróconej', 'na trasie skróconej', 'na skróconej trasie', 'na odcinku skróconym']
     name = 'reduced'
 
 @dataclass
@@ -100,7 +100,7 @@ class On(Token):
 
 @dataclass
 class Run(Token):
-    raw = ['pociągi kursują', 'kursują']
+    raw = ['pociągi kursują', 'kursują', 'kursuje']
 
 
 @dataclass
