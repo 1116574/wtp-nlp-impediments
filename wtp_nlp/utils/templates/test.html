@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>WTP utrudnienia</title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+        code {
+            font-family: monospace;
+            background-color: #dddddd;
+            border-radius: 4px;
+            padding: 2px;
+        }
+        li {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    {% if input %}
+    <h2> {{ input }} </h2>
+    <hr>
+    {% endif %}
+    {% for event in parsed %} {# strip whitespace #}
+    <div>
+        <h2><code>{{ event.name }}</code></h2>
+        <h3>Status: <code>{{ event.processed_to[0] }}</code></h3>
+        {% if event.processed_to[1] is iterable %}
+            <ul>
+            {% for event in event.processed_to[1] %}
+            <li><code>{{ event }}</code></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+        <h3>Data: <code>{{ event.processed_to[1] }}</code></h3>
+        {% endif %}
+    </div>
+    <hr>
+    {% endfor %} {# thx https://stackoverflow.com/a/36871283/9366540 #}
+
+    {# a comment #}
+</body>
+</html>
