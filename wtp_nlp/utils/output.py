@@ -32,7 +32,7 @@ def _create_segment(segment: list[Station]) -> list:
     return output
 
 
-def generate_gtfs():
+def generate_gtfs():  # distant future
     pass
 
 
@@ -42,6 +42,25 @@ def generate_text(parsed, timestamp=False):
 
     for entry in parsed:
         print(entry)
+
+
+def generate_html(parsed, timestamp=False, input=False):
+    logger = logging.getLogger('output')
+    logger.debug(f'html:recieved: {parsed}')
+
+
+    from jinja2 import Environment, PackageLoader, select_autoescape
+    env = Environment(
+        loader=PackageLoader('wtp_nlp.utils'),
+        autoescape=select_autoescape(),
+        # autoescape=True,
+        trim_blocks=True,
+        lstrip_blocks=True
+    )
+
+    template = env.get_template('test.html')
+
+    return template.render(parsed=parsed, input=input)
 
 
 def generate_image():  # mayby?

@@ -27,12 +27,6 @@ def maker(broken_html):
     return text
 
 
-def save(args, output):
-    # 5. Save (optional)
-    if args.out_file:
-        with open(args.out_file, 'w', encoding='utf-8') as f:
-            json.dump(output, f, indent=4, ensure_ascii=False)
-
 
 def main(args = None):
     parser = argparse.ArgumentParser()
@@ -43,7 +37,7 @@ def main(args = None):
     input_src.add_argument("-ht", "--html", help="Pass alert text in html as an argument, skipping RSS")
     input_src.add_argument("-f", "--file", help="Pass alert text in a file, skipping RSS")
 
-    parser.add_argument("-o", "--out", help="choose output format: text, gtfs or json (default: json)", default='json')
+    parser.add_argument("-o", "--out", help="choose output format: text, gtfs, html, json (default: json)", default='json')
     parser.add_argument("-of", "--out_file", help="filename for output", default=False)
     parser.add_argument("-ot", "--out_timestamp", help="timestamp the output", default=True)
 
@@ -130,8 +124,21 @@ def main(args = None):
         output = wtp_nlp.utils.output.generate_gtfs(filtered)
     elif args.out == 'text':
         output = wtp_nlp.utils.output.generate_text(filtered, timestamp=timestamp)
+    elif args.out == 'html':
+        if args.include:
+            input = data
+        else:
+            input = False
+        output = wtp_nlp.utils.output.generate_html(filtered, timestamp=timestamp, input=input)
 
-    save(args, output)
+
+    # 5. Save (optional)
+    if args.out_file and args.out == 'json':
+        with open(args.out_file, 'w', encoding='utf-8') as f:
+            json.dump(output, f, indent=4, ensure_ascii=False)
+    elif args.out_file and args.out == 'html':
+        with open(args.out_file, 'w', encoding='utf-8') as f:
+            f.write(output)
     
     # The end.
     print(output)

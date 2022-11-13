@@ -57,7 +57,7 @@ class Station:
         return (self.name + ''.join(self.forms)).__hash__()
 
     def __str__(self) -> str:
-        return self.id
+        return f'{self.id}/{self.name}'
 
 
 A1 = Station('A1', 'Kabaty', ['Kabat'], '3282m', True)
