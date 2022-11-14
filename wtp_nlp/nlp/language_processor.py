@@ -15,7 +15,9 @@ def language_processor(text):
     for i, tok in enumerate(token_collection):
         if tok == 0:
             try:
-                if token_collection[i-1] == token_collection[i+1]:
+                prev = token_collection[i-1]
+                next = token_collection[i+1]
+                if prev == next or type(prev) == type(next):
                     token_collection[i] = Dummy
                     token_collection[i+1] = Dummy
             except IndexError:

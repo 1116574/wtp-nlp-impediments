@@ -15,12 +15,13 @@ class New_Line:
 @dataclass
 class Token:
     """ Generic word token """
+    length: int = 0
     pass
     # raw: list
     # name: str
 
-    # def __repr__(self):
-    #     return f'< {self.name} >'
+    def __repr__(self):
+        return f'< {self.__class__.__name__} >'
 
 
 @dataclass
@@ -125,13 +126,14 @@ class Skipping(Token):
     raw = ['z ominięciem', 'pomijając']
 
 class Metro_Line:
-    __match_args__ = ('line',)
+    # __match_args__ = ('line',)
 
     def __init__(self, line) -> None:
         self.line = line
+        self.length = len(line)   # FIXME possible bug with leading space?
 
     def __repr__(self) -> str:
-        return f'< {self.line} >'
+        return f'< {self.line} len={len(self.line)} >'
 
     def __str__(self):
         return self.line.strip()  # this is an offle fix for ' M1' -> 'M1'
@@ -162,6 +164,7 @@ class Metro_Replacement_Names:
     def __init__(self, repl_name) -> None:
         self.repl_name = repl_name
         self.raw = [repl_name]
+        self.length = len(repl_name) 
 
     def __repr__(self) -> str:
         return f'< Metro_Replacement_Name: {self.repl_name} >'

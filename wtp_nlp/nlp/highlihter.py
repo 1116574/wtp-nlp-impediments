@@ -85,6 +85,7 @@ def tokenizer(text: list) -> list:
                 for index in results:
                     logger.debug(f'metro_replacer:replacing at {index} with {station}')
                     semantic[index] = station
+                    semantic[index].length = len(name)
 
                     # replace additional letters
                     for g in range(1, len(name)):
@@ -95,7 +96,12 @@ def tokenizer(text: list) -> list:
         for name in word.raw:
             results = _find_all(text.lower(), name.lower())
             for index in results:
-                semantic[index] = word
+                if isinstance(word, type):
+                    semantic[index] = word()
+                else:
+                    semantic[index] = word
+                semantic[index].length = len(name)
+                print('==>', semantic[index], semantic[index].length)
 
                 # if str(word) == "<class 'wtp_nlp.data.tokens.Shortened_Service'>":
                 #     print(index, name)
