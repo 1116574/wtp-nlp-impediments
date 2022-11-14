@@ -70,11 +70,11 @@ def tokenizer(text: list) -> list:
     # Detect 'and' ('i')
     results = _find_all(text, ' i ')
     for index in results:
-        semantic[index] = And
+        semantic[index] = And(len=3)
 
     results = _find_all(text, ' oraz ')
     for index in results:
-        semantic[index] = And
+        semantic[index] = And(len=6)
 
 
     # Metro stations
@@ -83,7 +83,12 @@ def tokenizer(text: list) -> list:
             for name in station:
                 results = _find_all(text.lower(), name.lower())
                 for index in results:
-                    logger.debug(f'metro_replacer:replacing at {index} with {station}')
+                    logger.debug(f'metro_replacer:trying to replace at {index} with {station}')
+                    if semantic[index] is Dummy:
+                        logger.debug(f'metro_replacer:skipping replace at {index}')  # duplication below!
+                        continue
+
+                    logger.debug(f'metro_replacer:replacing at {index}')
                     semantic[index] = station
                     semantic[index].length = len(name)
 
@@ -93,14 +98,17 @@ def tokenizer(text: list) -> list:
 
     # Important tokens - station shutdowns, loops
     for word in TOKENS:
-        for name in word.raw:
+        for word_index, name in enumerate(word.raw):
             results = _find_all(text.lower(), name.lower())
             for index in results:
+                if semantic[index] is Dummy:
+                    logger.debug(f'token:skipping replace at {index}')  # duplication above!
+                    continue
                 if isinstance(word, type):
-                    semantic[index] = word()
+                    semantic[index] = word(length=len(name), index=word_index, text=name)
                 else:
                     semantic[index] = word
-                semantic[index].length = len(name)
+                semantic[index].length = len(name)  # this should be in the if clause, and shouldnt work like this?
                 print('==>', semantic[index], semantic[index].length)
 
                 # if str(word) == "<class 'wtp_nlp.data.tokens.Shortened_Service'>":

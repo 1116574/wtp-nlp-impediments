@@ -8,6 +8,7 @@ from wtp_nlp.data.tokens import Dummy
 
 
 def language_processor(text):
+    logger = logging.getLogger('nlp')
     results = []
     token_collection = tokenizer(text)
 
@@ -18,6 +19,7 @@ def language_processor(text):
                 prev = token_collection[i-1]
                 next = token_collection[i+1]
                 if prev == next or type(prev) == type(next):
+                    logger.warning(f'Token duplication removed. This shouldnt happen anymore. {token_collection}')
                     token_collection[i] = Dummy
                     token_collection[i+1] = Dummy
             except IndexError:
@@ -26,7 +28,6 @@ def language_processor(text):
     while Dummy in token_collection:
         token_collection.remove(Dummy)
 
-    logger = logging.getLogger('nlp')
     logger.debug(f'tokenizer returned: {token_collection}')
 
     # Find patterns & get their results
