@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Reason_is:
-    raw = ['Z powodu','Z przyczyn', 'Z przyczyny']
+    raw = ['Z powodu','Z przyczyn', 'Z przyczyny', 'w wyniku']
 
 class Orphaned_Luggage:
     api_name = 'luggage'
@@ -19,7 +19,7 @@ class Terrorist_Attack:
 
 class Incident:
     api_name = 'incident'
-    raw = ['zdarzenia', 'wypadku']
+    raw = ['zdarzenia', 'wypadku', 'zdarzenia']
 
 
 
