@@ -3,11 +3,14 @@ from dataclasses import dataclass
 class Dummy:
     pass
 
+@dataclass
 class Full_Stop:
-    pass
+    len: int = 1
 
+@dataclass
 class And:
-    pass
+    len: int = 1
+    text: str = ''
 
 class New_Line:
     pass
@@ -16,9 +19,8 @@ class New_Line:
 class Token:
     """ Generic word token """
     length: int = 0
-    pass
-    # raw: list
-    # name: str
+    index: int = 0
+    text: str = ''
 
     def __repr__(self):
         return f'< {self.__class__.__name__} >'
