@@ -44,6 +44,7 @@ def main(args = None):
     parser.add_argument("-i", "--include", help="include input text in output; works in json", default=False, action='store_true')
     
     parser.add_argument("-dt", "--debug_tokenizer", help="run only tokenizer then quit", default=False, action='store_true')
+    parser.add_argument("-dth", "--debug_tokenizer_html", help="run only tokenizer then output to clean html", default=False, action='store_true')
     parser.add_argument("-dp", "--debug_pattern", help="run only tokenizer and pattern matcher then quit", default=False, action='store_true')
     parser.add_argument("-v", "--verbosity", help="set verbosity level", default=2, action='count')
 
@@ -76,6 +77,19 @@ def main(args = None):
         con.print(wtp_nlp.nlp.highlihter.tokenizer(data))
         quit()
 
+    if args.debug_tokenizer_html:
+        from rich import console
+        con = console.Console()
+        tokens = wtp_nlp.nlp.highlihter.tokenizer(data)
+        html_result = wtp_nlp.utils.output.generate_debug_html(tokens, data)
+        if args.out_file:
+            with open(args.out_file, 'w', encoding='utf-8') as f:
+                f.write(html_result)
+        else:
+            print(html_result)
+            print('Specify -of <filename> to save')
+        quit()
+
     # 2. Generate timestamp, if requested
     if args.out_timestamp:
         timestamp = datetime.now().isoformat()
@@ -86,7 +100,8 @@ def main(args = None):
     if data is None:
         logging.info('No data/No impediments are taking place')
         output = wtp_nlp.utils.output.json_stub(timestamp=timestamp)
-        save(args, output)
+        with open(args.out_file, 'w', encoding='utf-8') as f:
+            json.dump(output, f, indent=4, ensure_ascii=False)
         quit()
     else:
         # Quickfix - add a leading garbage character - helps matching M1/M2

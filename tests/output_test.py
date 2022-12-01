@@ -10,6 +10,7 @@ class Args:
         self.text = text
         self.out = out
         self.debug_tokenizer = False
+        self.debug_tokenizer_html = False
         self.debug_pattern = False
         self.out_file = False
         self.verbosity = 3

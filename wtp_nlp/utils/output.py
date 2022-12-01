@@ -44,10 +44,38 @@ def generate_text(parsed, timestamp=False):
         print(entry)
 
 
+def generate_debug_html(tokens, input):
+    logger = logging.getLogger('output')
+    logger.debug(f'html_debug_tokenizer:recieved: {tokens}')
+
+    from jinja2 import Environment, PackageLoader, select_autoescape
+    env = Environment(
+        loader=PackageLoader('wtp_nlp.utils'),
+        autoescape=select_autoescape(),
+        trim_blocks=True,
+        lstrip_blocks=True
+    )
+
+    for i, token in enumerate(tokens):
+        if token == 0:
+            continue
+        if type(token) is int:
+            tokens[i] = input[te:te+token]
+            # print('==>', input[te+1:token])
+            continue
+        ti = token.index
+        te = token.index + token.length
+
+    print(len(tokens))
+    print(tokens)
+
+    template = env.get_template('debug_tokenizer.html')
+    return template.render(tokens=tokens, input=input)
+
+
 def generate_html(parsed, timestamp=False, input=False):
     logger = logging.getLogger('output')
     logger.debug(f'html:recieved: {parsed}')
-
 
     from jinja2 import Environment, PackageLoader, select_autoescape
     env = Environment(
@@ -58,8 +86,7 @@ def generate_html(parsed, timestamp=False, input=False):
         lstrip_blocks=True
     )
 
-    template = env.get_template('test.html')
-
+    template = env.get_template('output.html')
     return template.render(parsed=parsed, input=input)
 
 

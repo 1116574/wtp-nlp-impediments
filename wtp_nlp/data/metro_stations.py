@@ -29,6 +29,7 @@ class Station:
     forms: list
     gtfs_id: str
     length: int = 0  # to be filled at runtime
+    index: int = 0  # to be filled at runtime
     turn_around: bool = False
 
     __match_args__ = ('id', 'name', 'forms', 'turn_around')
@@ -45,7 +46,7 @@ class Station:
 
 
     def __repr__(self):
-        return f'{self.id}_{self.name}(length={self.length})'
+        return f'{self.id}_{self.name}(length={self.length}, index={self.index})'
 
     def __iter__(self):
         all_forms = ['Metro ' + self.name, self.name] + self.forms
@@ -57,8 +58,8 @@ class Station:
     def __hash__(self) -> int:
         return (self.name + ''.join(self.forms)).__hash__()
 
-    def __str__(self) -> str:
-        return f'{self.id}/{self.name}'
+    # def __str__(self) -> str:
+    #     return f'{self.id}/{self.name}'
 
 
 A1 = Station('A1', 'Kabaty', ['Kabat'], '3282m', True)

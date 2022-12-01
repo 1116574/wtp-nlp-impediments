@@ -5,12 +5,16 @@ class Dummy:
 
 @dataclass
 class Full_Stop:
-    len: int = 1
+    length: int = 1
+    index: int = 0  # fill at runtime
+
 
 @dataclass
 class And:
-    len: int = 1
-    text: str = ''
+    length: int = 1  # fix at runtime
+    text: str = ''  # fill at runtime
+    index: int = 0  # fill at runtime
+
 
 class New_Line:
     pass
@@ -20,6 +24,7 @@ class Token:
     """ Generic word token """
     length: int = 0
     index: int = 0
+    word_index: int = 0
     text: str = ''
 
     def __repr__(self):
@@ -130,12 +135,13 @@ class Skipping(Token):
 class Metro_Line:
     # __match_args__ = ('line',)
 
-    def __init__(self, line) -> None:
+    def __init__(self, line, index=0) -> None:
         self.line = line
         self.length = len(line)   # FIXME possible bug with leading space?
+        self.index = index  # to be filled later, at runtime
 
     def __repr__(self) -> str:
-        return f'< {self.line} len={len(self.line)} >'
+        return f'< {self.line} len={len(self.line)} index={self.index} >'
 
     def __str__(self):
         return self.line.strip()  # this is an offle fix for ' M1' -> 'M1'

@@ -4,6 +4,7 @@ from dataclasses import dataclass
 class _Reason:
     length: int = 0
     index: int = 0
+    word_index: int = 0
     text: str = ''
 
 @dataclass
