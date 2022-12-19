@@ -108,6 +108,9 @@ output (json):
 }
 ```
 
+# What it did
+The `affected` field is a list of sequential metro stops on which metro runs according to parsed service alert. In this case, last 3 stations arent on that list - Trocka, Zacisze, Szwedzka. Trains on this segment were stopped and dont run. If a central part of the line was to be closed, then you would see two `conditions` both with status loop, each covering appropriate leg of the remeaning line. See Warsaw metro diagram <a href="https://www.wtp.waw.pl/wp-content/uploads/sites/2/2020/02/szynowa.png">here, on their website (blue lines are metro)</a>, or see the in-repo <a href="diagram.png">technical diagram</a>.
+
 # How it works
 1. The network component pools RSS for metro service updates. If one is found, a call to mkuran's GTFS-RT service is made. Long story short, RSS does not include reuired data, and mkuran already went ahead and wrote html parser for the transport authority website<blockquote>
     Alternatively, you can include custom text with `-t` flag

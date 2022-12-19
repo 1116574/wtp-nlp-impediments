@@ -80,7 +80,7 @@ No `line` is provided for this status.
 --------
 
 ### `Degraded_Segment`
-There are (possibly undefinied) delays between stations, there are less trains than usual (reduced frequency), trains stop for longer then normal, or an otherwise condition that degrades the service, **but doesnt stop it completely**
+There are (possibly undefinied) delays between stations, there are less trains than usual (reduced frequency), trains stop for longer then normal, or an otherwise condition that degrades the service, **but doesnt stop it completely** (*note that this was rarely, if ever, encountered on the real network, thus test data was sparse and this status might be buggier then the rest of spaghetti code here*)
 
 `affected` will be a list of stops that service is degraded on.
 
@@ -88,7 +88,7 @@ There are (possibly undefinied) delays between stations, there are less trains t
 
 --------
 ### `Degraded_Line`
-A line (as a whole) is experiencing some difficulties.
+A line (as a whole) is experiencing some difficulties. This is usually when the authority is lazy and only provides a generic "problems on the metro" message. (*note that `multiple` was never encountered, and is only technically supported*)
 
 `affected` will be a list of strings denoting the metro line (M1 or M2) that is experiencing difficulties.
 
