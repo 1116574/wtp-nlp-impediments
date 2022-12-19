@@ -9,11 +9,11 @@ class _Reason:
 
 @dataclass
 class Reason_is(_Reason):
-    raw = ['Z powodu','Z przyczyn', 'Z przyczyny', 'w wyniku']
+    raw = ['Z powodu','Z przyczyn', 'Z przyczyny', 'w wyniku', 'w związku']
 
 class Orphaned_Luggage(_Reason):
     api_name = 'luggage'
-    raw = ['pozostawionego bagażu', 'zostawionego bagażu', 'pozostawienia bagażu', 'zostawienia bagażu']
+    raw = ['pozostawionego bagażu', 'pozostawionym bagażem', 'zostawionego bagażu', 'pozostawienia bagażu', 'zostawienia bagażu', 'zostawionym bagażem']
 
 class Technical(_Reason):
     api_name = 'technical'
@@ -25,7 +25,7 @@ class Terrorist_Attack(_Reason):
 
 class Incident(_Reason):
     api_name = 'incident'
-    raw = ['zdarzenia', 'wypadku', 'zdarzenia']
+    raw = ['zdarzenia', 'zdarzeniem', 'wypadku']
 
 
 

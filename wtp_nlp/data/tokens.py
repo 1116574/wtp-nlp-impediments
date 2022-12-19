@@ -219,6 +219,8 @@ TOKENS = [
     Metro_Replacement_Names('Z-1'),
     Metro_Replacement_Names('Z-2'),
     Metro_Replacement_Names('linii Z'),
+    Metro_Replacement_Names('linię Z'),
+    Metro_Replacement_Names('linie Z'),
     Skipping,
     Whole_Metro,
 
