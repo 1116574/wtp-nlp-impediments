@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>debug</title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+        code {
+            font-family: monospace;
+            background-color: #dddddd;
+            border-radius: 4px;
+            padding: 2px;
+        }
+        li {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h2> {{ input }} </h2>
+    <hr>
+
+    {% for token in tokens %}
+    <ul>
+        <li><code>{{ token }}</code></li>
+    </ul>
+    {% endfor %} {# thx https://stackoverflow.com/a/36871283/9366540 #}
+
+    {# a comment #}
+</body>
+</html>
