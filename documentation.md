@@ -42,7 +42,7 @@
         }, 
         ...there is no limit to amount of conditions, but Loops are usually most important so I suggest implementing them first
     ],
-    "reason": null|string,
+    "reason": "incident|technical|luggage|terrorism",
     "replacement_service": {
         "exists": bool,
         "name": null|string,
